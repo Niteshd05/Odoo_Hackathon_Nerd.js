@@ -1,0 +1,312 @@
+// EcoSphere - ESG Management Platform
+// SQLite for zero-config hackathon deployment. Enums are modelled as String
+// fields (SQLite has no native enum) with the allowed values documented inline.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================
+// MASTER DATA
+// ============================================================
+
+model Department {
+  id            String   @id @default(cuid())
+  name          String
+  code          String   @unique
+  headId        String?
+  parentId      String?
+  parent        Department?  @relation("DeptHierarchy", fields: [parentId], references: [id])
+  children      Department[] @relation("DeptHierarchy")
+  employeeCount Int      @default(0)
+  status        String   @default("Active") // Active | Inactive
+
+  // Seeded pillar scores for the vertical slice (Social + Governance are not
+  // computed from live data yet, so they live here as 0-100 baselines).
+  seedSocialScore Float @default(70)
+  seedGovScore    Float @default(70)
+
+  employees        Employee[]
+  goals            EnvironmentalGoal[]
+  operationRecords OperationRecord[]
+  carbon           CarbonTransaction[]
+  scores           DepartmentScore[]
+  csrActivities    CSRActivity[]
+  audits           Audit[]
+  complianceIssues ComplianceIssue[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Employee {
+  id           String  @id @default(cuid())
+  name         String
+  email        String  @unique
+  role         String  @default("Employee") // Admin | Manager | Employee
+  departmentId String?
+  department   Department? @relation(fields: [departmentId], references: [id])
+  xp           Int     @default(0)
+  points       Int     @default(0)
+  avatarColor  String  @default("#34d399")
+  title        String?
+
+  participations ChallengeParticipation[]
+  redemptions    RewardRedemption[]
+  badges         EmployeeBadge[]
+  csrJoins       EmployeeParticipation[]
+  acks           PolicyAcknowledgement[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Category {
+  id     String  @id @default(cuid())
+  name   String
+  type   String // CSR | Challenge
+  status String  @default("Active")
+
+  challenges Challenge[]
+}
+
+model EmissionFactor {
+  id         String  @id @default(cuid())
+  name       String
+  unit       String // e.g. "kg CO2 per unit"
+  factor     Float
+  sourceType String // Purchase | Manufacturing | Expense | Fleet
+  status     String  @default("Active")
+
+  carbon CarbonTransaction[]
+}
+
+model EnvironmentalGoal {
+  id           String  @id @default(cuid())
+  name         String
+  departmentId String
+  department   Department @relation(fields: [departmentId], references: [id])
+  metric       String  @default("Total CO2 (kg)")
+  targetValue  Float
+  period       String  @default("2026")
+  status       String  @default("Active") // Active | Achieved | Missed
+
+  createdAt DateTime @default(now())
+}
+
+model Badge {
+  id          String  @id @default(cuid())
+  name        String
+  description String
+  unlockRule  String // JSON string e.g. {"type":"xp","gte":500}
+  icon        String  @default("Award")
+  tier        String  @default("Bronze") // Bronze | Silver | Gold | Platinum
+
+  employees EmployeeBadge[]
+}
+
+model Reward {
+  id             String  @id @default(cuid())
+  name           String
+  description    String
+  pointsRequired Int
+  stock          Int     @default(0)
+  status         String  @default("Active")
+  icon           String  @default("Gift")
+
+  redemptions RewardRedemption[]
+}
+
+model ESGPolicy {
+  id       String  @id @default(cuid())
+  title    String
+  body     String
+  category String  @default("Governance")
+  status   String  @default("Published") // Draft | Published | Archived
+
+  acks PolicyAcknowledgement[]
+
+  createdAt DateTime @default(now())
+}
+
+// ============================================================
+// TRANSACTIONAL DATA
+// ============================================================
+
+model OperationRecord {
+  id           String   @id @default(cuid())
+  type         String // Purchase | Manufacturing | Expense | Fleet
+  departmentId String
+  department   Department @relation(fields: [departmentId], references: [id])
+  quantity     Float
+  date         DateTime @default(now())
+  description  String?
+
+  carbon CarbonTransaction[]
+
+  createdAt DateTime @default(now())
+}
+
+model CarbonTransaction {
+  id                String   @id @default(cuid())
+  operationRecordId String?
+  operationRecord   OperationRecord? @relation(fields: [operationRecordId], references: [id], onDelete: Cascade)
+  emissionFactorId  String
+  emissionFactor    EmissionFactor @relation(fields: [emissionFactorId], references: [id])
+  departmentId      String
+  department        Department @relation(fields: [departmentId], references: [id])
+  quantity          Float
+  computedCO2       Float
+  date              DateTime @default(now())
+  auto              Boolean  @default(true)
+
+  // Anomaly detection metadata (statistical outlier flag).
+  anomaly       Boolean @default(false)
+  anomalyReason String?
+
+  createdAt DateTime @default(now())
+}
+
+model Challenge {
+  id               String   @id @default(cuid())
+  title            String
+  categoryId       String?
+  category         Category? @relation(fields: [categoryId], references: [id])
+  description      String
+  xp               Int      @default(100)
+  difficulty       String   @default("Medium") // Easy | Medium | Hard
+  evidenceRequired Boolean  @default(false)
+  deadline         DateTime?
+  status           String   @default("Draft") // Draft | Active | Under Review | Completed | Archived
+
+  participations ChallengeParticipation[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ChallengeParticipation {
+  id          String   @id @default(cuid())
+  challengeId String
+  challenge   Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+  employeeId  String
+  employee    Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  progress    Int      @default(0) // 0-100
+  proof       String?
+  approval    String   @default("Pending") // Pending | Approved | Rejected
+  xpAwarded   Int      @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([challengeId, employeeId])
+}
+
+model RewardRedemption {
+  id         String   @id @default(cuid())
+  rewardId   String
+  reward     Reward   @relation(fields: [rewardId], references: [id])
+  employeeId String
+  employee   Employee @relation(fields: [employeeId], references: [id])
+  pointsSpent Int
+  date       DateTime @default(now())
+}
+
+model EmployeeBadge {
+  id         String   @id @default(cuid())
+  employeeId String
+  employee   Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  badgeId    String
+  badge      Badge    @relation(fields: [badgeId], references: [id], onDelete: Cascade)
+  awardedAt  DateTime @default(now())
+
+  @@unique([employeeId, badgeId])
+}
+
+model DepartmentScore {
+  id                 String   @id @default(cuid())
+  departmentId       String
+  department         Department @relation(fields: [departmentId], references: [id], onDelete: Cascade)
+  environmentalScore Float
+  socialScore        Float
+  governanceScore    Float
+  totalScore         Float
+  computedAt         DateTime @default(now())
+}
+
+// ============================================================
+// SEED-ONLY (read-only lists in the demo)
+// ============================================================
+
+model CSRActivity {
+  id           String   @id @default(cuid())
+  title        String
+  departmentId String?
+  department   Department? @relation(fields: [departmentId], references: [id])
+  category     String   @default("Community")
+  impact       String?
+  date         DateTime @default(now())
+  status       String   @default("Completed")
+
+  participants EmployeeParticipation[]
+}
+
+model EmployeeParticipation {
+  id            String   @id @default(cuid())
+  csrActivityId String
+  csrActivity   CSRActivity @relation(fields: [csrActivityId], references: [id], onDelete: Cascade)
+  employeeId    String
+  employee      Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  hours         Float    @default(0)
+}
+
+model PolicyAcknowledgement {
+  id         String   @id @default(cuid())
+  policyId   String
+  policy     ESGPolicy @relation(fields: [policyId], references: [id], onDelete: Cascade)
+  employeeId String
+  employee   Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  ackedAt    DateTime @default(now())
+}
+
+model Audit {
+  id           String   @id @default(cuid())
+  title        String
+  departmentId String?
+  department   Department? @relation(fields: [departmentId], references: [id])
+  type         String   @default("Internal")
+  result       String   @default("Pass") // Pass | Fail | Partial
+  date         DateTime @default(now())
+  notes        String?
+}
+
+model ComplianceIssue {
+  id           String   @id @default(cuid())
+  title        String
+  departmentId String?
+  department   Department? @relation(fields: [departmentId], references: [id])
+  severity     String   @default("Low") // Low | Medium | High | Critical
+  status       String   @default("Open") // Open | In Progress | Resolved
+  raisedAt     DateTime @default(now())
+}
+
+// ============================================================
+// SETTINGS (single row)
+// ============================================================
+
+model EsgConfig {
+  id                    String  @id @default("singleton")
+  weightEnvironmental   Float   @default(0.4)
+  weightSocial          Float   @default(0.3)
+  weightGovernance      Float   @default(0.3)
+  autoEmissionEnabled   Boolean @default(true)
+  evidenceRequiredEnabled Boolean @default(true)
+  badgeAutoAwardEnabled Boolean @default(true)
+
+  updatedAt DateTime @updatedAt @default(now())
+}
