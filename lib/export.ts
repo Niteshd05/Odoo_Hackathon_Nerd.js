@@ -101,15 +101,17 @@ export function exportSummaryPDF(opts: {
     }
     textContent = textContent.trim();
 
-    // Sanitize non-ASCII characters to prevent jsPDF text measuring/spacing bugs
+    // Clean up text
     textContent = textContent
       .replace(/₂/g, "2")
-      .replace(/—/g, "-")
+      .replace(/[—–]/g, "-")
       .replace(/[“”]/g, '"')
       .replace(/[‘’]/g, "'")
       .replace(/[\u2018\u2019]/g, "'")
-      .replace(/[\u201C\u201D]/g, '"')
-      .replace(/[^\x20-\x7E]/g, ""); // strip all other non-ASCII
+      .replace(/[\u201C\u201D]/g, '"');
+    
+    // Explicitly enforce no character spacing
+    doc.setCharSpace(0);
 
     if (isHeading) {
       y += 12; // extra space before heading
@@ -127,16 +129,18 @@ export function exportSummaryPDF(opts: {
       doc.setFontSize(10);
       doc.setTextColor(50, 58, 72);
       
-      const wrapped = doc.splitTextToSize(textContent, pageW - margin * 2 - (isBullet ? 10 : 0));
-      for (const wLine of wrapped) {
-        if (y > 770) {
-          doc.addPage();
-          y = 56;
-        }
-        doc.text(wLine, margin + (isBullet ? 10 : 0), y, { align: "left" });
-        y += 14;
+      const width = pageW - margin * 2 - (isBullet ? 10 : 0);
+      const textX = margin + (isBullet ? 10 : 0);
+      
+      const dims = doc.getTextDimensions(textContent, { maxWidth: width });
+      
+      if (y + dims.h > 770) {
+        doc.addPage();
+        y = 56;
       }
-      y += 4; // space after paragraph
+      
+      doc.text(textContent, textX, y, { maxWidth: width, align: "left", charSpace: 0 });
+      y += dims.h + 8; // add paragraph spacing
     }
   }
 
