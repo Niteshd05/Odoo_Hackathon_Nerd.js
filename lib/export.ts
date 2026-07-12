@@ -60,43 +60,73 @@ export function exportSummaryPDF(opts: {
     doc.setDrawColor(220, 226, 235);
     doc.setFillColor(246, 248, 250);
     doc.roundedRect(x, y, boxW, 54, 6, 6, "FD");
+    
+    // Center the value
     doc.setTextColor(30, 40, 55);
     doc.setFont("helvetica", "bold");
     doc.setFontSize(20);
-    doc.text(String(s.value), x + 12, y + 30);
+    doc.text(String(s.value), x + boxW / 2, y + 26, { align: "center" });
+    
+    // Center the label
     doc.setFont("helvetica", "normal");
     doc.setFontSize(8);
     doc.setTextColor(110, 120, 135);
-    doc.text(s.label.toUpperCase(), x + 12, y + 44);
+    doc.text(s.label.toUpperCase(), x + boxW / 2, y + 42, { align: "center" });
   });
   y += 80;
 
   // Narrative (strip markdown markers for the PDF body)
   doc.setTextColor(40, 48, 62);
   const clean = opts.markdown
-    .replace(/^#+\s/gm, "")
-    .replace(/\*\*(.+?)\*\*/g, "$1");
-  const lines = clean.split("\n").filter((l) => l.trim());
-  for (const line of lines) {
-    const isHeading = /^(Executive Summary|Environmental|Social|Governance|Key Risks|Recommendations)/i.test(line.trim());
-    if (y > 760) {
-      doc.addPage();
-      y = 56;
+    .replace(/\*\*(.+?)\*\*/g, "$1")
+    .replace(/__(.+?)__/g, "$1")
+    .replace(/\*(.+?)\*/g, "$1")
+    .replace(/_(.+?)_/g, "$1")
+    .replace(/`([^`]+)`/g, "$1")
+    .replace(/\[(.+?)\]\(.+?\)/g, "$1");
+
+  const lines = clean.split("\n");
+  for (let i = 0; i < lines.length; i++) {
+    const rawLine = lines[i];
+    if (!rawLine.trim()) {
+      if (y > 56) y += 6;
+      continue;
     }
+    
+    const isHeading = rawLine.startsWith("#");
+    const isBullet = rawLine.trim().startsWith("-") || rawLine.trim().startsWith("*");
+    let textContent = rawLine.replace(/^#+\s*/, "");
+    if (isBullet) {
+      textContent = textContent.replace(/^[-*]\s*/, "• ");
+    }
+    textContent = textContent.trim();
+
     if (isHeading) {
-      y += 6;
+      y += 12; // extra space before heading
+      if (y > 770) {
+        doc.addPage();
+        y = 56;
+      }
       doc.setFont("helvetica", "bold");
-      doc.setFontSize(12);
-      doc.setTextColor(5, 120, 90);
-      doc.text(line.trim(), margin, y);
-      y += 16;
+      doc.setFontSize(14);
+      doc.setTextColor(20, 30, 40);
+      doc.text(textContent, margin, y);
+      y += 18;
     } else {
       doc.setFont("helvetica", "normal");
       doc.setFontSize(10);
       doc.setTextColor(50, 58, 72);
-      const wrapped = doc.splitTextToSize(line.trim(), pageW - margin * 2);
-      doc.text(wrapped, margin, y);
-      y += wrapped.length * 14 + 2;
+      
+      const wrapped = doc.splitTextToSize(textContent, pageW - margin * 2 - (isBullet ? 10 : 0));
+      for (const wLine of wrapped) {
+        if (y > 770) {
+          doc.addPage();
+          y = 56;
+        }
+        doc.text(wLine, margin + (isBullet ? 10 : 0), y);
+        y += 14;
+      }
+      y += 4; // space after paragraph
     }
   }
 
