@@ -97,9 +97,19 @@ export function exportSummaryPDF(opts: {
     const isBullet = rawLine.trim().startsWith("-") || rawLine.trim().startsWith("*");
     let textContent = rawLine.replace(/^#+\s*/, "");
     if (isBullet) {
-      textContent = textContent.replace(/^[-*]\s*/, "• ");
+      textContent = textContent.replace(/^[-*]\s*/, "- ");
     }
     textContent = textContent.trim();
+
+    // Sanitize non-ASCII characters to prevent jsPDF text measuring/spacing bugs
+    textContent = textContent
+      .replace(/₂/g, "2")
+      .replace(/—/g, "-")
+      .replace(/[“”]/g, '"')
+      .replace(/[‘’]/g, "'")
+      .replace(/[\u2018\u2019]/g, "'")
+      .replace(/[\u201C\u201D]/g, '"')
+      .replace(/[^\x20-\x7E]/g, ""); // strip all other non-ASCII
 
     if (isHeading) {
       y += 12; // extra space before heading
@@ -110,7 +120,7 @@ export function exportSummaryPDF(opts: {
       doc.setFont("helvetica", "bold");
       doc.setFontSize(14);
       doc.setTextColor(20, 30, 40);
-      doc.text(textContent, margin, y);
+      doc.text(textContent, margin, y, { align: "left" });
       y += 18;
     } else {
       doc.setFont("helvetica", "normal");
@@ -123,7 +133,7 @@ export function exportSummaryPDF(opts: {
           doc.addPage();
           y = 56;
         }
-        doc.text(wLine, margin + (isBullet ? 10 : 0), y);
+        doc.text(wLine, margin + (isBullet ? 10 : 0), y, { align: "left" });
         y += 14;
       }
       y += 4; // space after paragraph
