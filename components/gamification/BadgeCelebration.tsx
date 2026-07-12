@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Icon } from "@/components/ui/Icon";
 import { TIER_STYLE } from "@/lib/badges";
@@ -43,12 +44,17 @@ export function BadgeCelebration({
     return () => clearTimeout(t);
   }, [onClose]);
 
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   const badge = badges[0];
   const tier = TIER_STYLE[badge.tier] ?? TIER_STYLE.Bronze;
 
-  return (
+  if (!mounted) return null;
+
+  return createPortal(
     <AnimatePresence>
-      <div className="fixed inset-0 z-[80] grid place-items-center overflow-hidden p-4">
+      <div className="fixed inset-0 z-[100] grid place-items-center overflow-hidden p-4">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -189,6 +195,7 @@ export function BadgeCelebration({
           </motion.button>
         </motion.div>
       </div>
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body,
   );
 }
