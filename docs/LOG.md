@@ -10,3 +10,20 @@
 - Commit: (see git log)
 - Notes/gotchas: AI provider is Ollama (gpt-oss:120b-cloud), NOT Anthropic - see DECISIONS.md.
   SQLite has no enums, so Json/enum fields are Strings. Seed script is the next action.
+
+## 2026-07-12 - Full vertical slice complete
+- What: Built the scoring engine + org dashboard, the full Environmental module (operations
+  with auto carbon calc + live preview, carbon ledger with anomaly flags, emission-factor CRUD,
+  goals with progress, carbon dashboard), the full Gamification module (challenge lifecycle,
+  approval-driven XP + points, badge auto-award with a confetti celebration, reward redemption
+  with stock/points checks, leaderboard, badge gallery), ESG Configuration with live weight
+  recompute, seeded Social + Governance read-only views, and the AI layer: streaming ESG Copilot
+  and an AI ESG Summary Report (PDF + CSV export) over grounded, cited records via Ollama.
+- Files: lib/{scoring,carbon,gamification,badges,ollama,export}.ts, lib/ai/*, lib/actions/*,
+  app/(app)/**, app/api/{copilot,summary}, components/**.
+- Verify: `npm run build` passes clean (17 routes type-check); Copilot + Summary tested live
+  against gpt-oss:120b-cloud returning grounded, cited output; every route returns HTTP 200.
+- Commit: (see git log)
+- Notes/gotchas: System env `OLLAMA_HOST=0.0.0.0:11434` (schemeless bind addr) overrode .env;
+  lib/ollama.ts now normalizes the host (adds scheme, rewrites 0.0.0.0 -> 127.0.0.1).
+  prisma/seed.ts is excluded from the Next type-check (tsx runs it; strict any[] inference).

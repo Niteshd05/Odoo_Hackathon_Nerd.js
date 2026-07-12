@@ -35,7 +35,7 @@ export async function createOperationWithCarbon(input: {
     ? await prisma.emissionFactor.findUnique({ where: { id: input.emissionFactorId } })
     : await prisma.emissionFactor.findFirst({
         where: { sourceType: input.type, status: "Active" },
-        orderBy: { createdAt: "asc" as never },
+        orderBy: { name: "asc" },
       });
 
   if (!factor) {
