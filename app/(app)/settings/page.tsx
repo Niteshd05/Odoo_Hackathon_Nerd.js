@@ -57,7 +57,7 @@ export default async function SettingsPage() {
         label: d.code,
         type: "department" as const,
         value: deptScore?.totalScore ?? 50,
-        color: "#9CB84A",
+        color: "#FFE600",
       };
     }),
     ...factors.slice(0, 8).map((f) => ({
@@ -65,21 +65,21 @@ export default async function SettingsPage() {
       label: f.name.length > 12 ? f.name.slice(0, 12) + "…" : f.name,
       type: "factor" as const,
       value: 30,
-      color: "#5BA894",
+      color: "#A1A1AA",
     })),
     ...policies.slice(0, 6).map((p) => ({
       id: `policy-${p.id}`,
       label: p.title.length > 14 ? p.title.slice(0, 14) + "…" : p.title,
       type: "policy" as const,
       value: 25,
-      color: "#CB7A4E",
+      color: "#71717A",
     })),
     ...challenges.slice(0, 6).map((c) => ({
       id: `challenge-${c.id}`,
       label: c.title.length > 14 ? c.title.slice(0, 14) + "…" : c.title,
       type: "challenge" as const,
       value: c.xp / 5,
-      color: "#E0A838",
+      color: "#FFE600",
     })),
   ];
 
@@ -116,7 +116,7 @@ export default async function SettingsPage() {
       title: `Badge awarded: ${b.badge.name}`,
       description: `Earned by ${b.employee?.name ?? "unknown"}`,
       actor: b.employee?.name ?? "System",
-      actorColor: b.employee?.avatarColor ?? "#E0A838",
+      actorColor: b.employee?.avatarColor ?? "#FFE600",
       timestamp: b.awardedAt,
     })),
   ].sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
@@ -128,7 +128,7 @@ export default async function SettingsPage() {
         eyebrow="Admin"
         title="ESG Configuration"
         icon="SlidersHorizontal"
-        accent="#CB7A4E"
+        accent="#71717A"
         description="Tune pillar weights and feature toggles. Changes recompute the org score instantly."
       />
       <ConfigForm

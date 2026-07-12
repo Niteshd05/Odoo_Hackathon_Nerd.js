@@ -7,7 +7,7 @@ import { cn, formatNumber } from "@/lib/utils";
 export const dynamic = "force-dynamic";
 
 const PODIUM = [
-  { color: "#E0A838", icon: "Crown", label: "1st", h: "h-28" },
+  { color: "#FFE600", icon: "Crown", label: "1st", h: "h-28" },
   { color: "#cbd5e1", icon: "Medal", label: "2nd", h: "h-20" },
   { color: "#f59e0b", icon: "Medal", label: "3rd", h: "h-16" },
 ];
@@ -32,7 +32,7 @@ export default async function LeaderboardPage() {
         eyebrow="Gamification"
         title="Leaderboard"
         icon="Medal"
-        accent="#E0A838"
+        accent="#FFE600"
         description="Employees ranked by lifetime XP earned from sustainability challenges."
       />
 
@@ -45,12 +45,12 @@ export default async function LeaderboardPage() {
             return (
               <div key={emp.id} className="flex flex-col items-center">
                 <span
-                  className="mb-2 grid h-14 w-14 place-items-center rounded-full text-sm font-bold text-ink-950 ring-4"
+                  className="mb-2 grid h-14 w-14 place-items-center rounded-full text-sm font-bold text-[#0a0a0a] ring-4"
                   style={{ background: emp.avatarColor, ["--tw-ring-color" as string]: `${p.color}55` }}
                 >
                   {emp.name.split(" ").map((x) => x[0]).slice(0, 2).join("")}
                 </span>
-                <div className="text-sm font-semibold text-white">{emp.name.split(" ")[0]}</div>
+                <div className="text-sm font-semibold text-fg">{emp.name.split(" ")[0]}</div>
                 <div className="text-xs text-slate-500">{formatNumber(emp.xp)} XP</div>
                 <div
                   className={cn("mt-2 flex w-20 items-start justify-center rounded-t-xl pt-2", p.h)}
@@ -90,7 +90,7 @@ export default async function LeaderboardPage() {
                       <span
                         className={cn(
                           "grid h-7 w-7 place-items-center rounded-lg text-xs font-bold",
-                          i < 3 ? "text-ink-950" : "bg-white/5 text-slate-400",
+                          i < 3 ? "text-[#0a0a0a]" : "bg-line/5 text-slate-400",
                         )}
                         style={i < 3 ? { background: PODIUM[i].color } : undefined}
                       >
@@ -100,13 +100,13 @@ export default async function LeaderboardPage() {
                     <td className="py-3">
                       <div className="flex items-center gap-2.5">
                         <span
-                          className="grid h-8 w-8 place-items-center rounded-full text-[10px] font-bold text-ink-950"
+                          className="grid h-8 w-8 place-items-center rounded-full text-[10px] font-bold text-[#0a0a0a]"
                           style={{ background: emp.avatarColor }}
                         >
                           {emp.name.split(" ").map((x) => x[0]).slice(0, 2).join("")}
                         </span>
                         <div>
-                          <div className="font-medium text-white">
+                          <div className="font-medium text-fg">
                             {emp.name}
                             {isMe && <span className="ml-2 text-[10px] font-semibold text-env">YOU</span>}
                           </div>
@@ -122,7 +122,7 @@ export default async function LeaderboardPage() {
                       </span>
                     </td>
                     <td className="py-3 text-right text-slate-400">{formatNumber(emp.points)}</td>
-                    <td className="py-3 text-right font-bold text-white">{formatNumber(emp.xp)}</td>
+                    <td className="py-3 text-right font-bold text-fg">{formatNumber(emp.xp)}</td>
                   </tr>
                 );
               })}

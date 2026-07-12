@@ -25,7 +25,7 @@ export default async function BadgesPage() {
         eyebrow="Gamification"
         title="Badges"
         icon="Award"
-        accent="#E0A838"
+        accent="#FFE600"
         description="Auto-awarded the moment an employee meets the unlock rule. Rarer badges sit first."
       />
 
@@ -49,7 +49,7 @@ export default async function BadgesPage() {
                 </div>
                 <div className="min-w-0">
                   <div className="flex items-center gap-2">
-                    <h3 className="font-semibold text-white">{b.name}</h3>
+                    <h3 className="font-semibold text-fg">{b.name}</h3>
                   </div>
                   <span
                     className="mt-0.5 inline-block rounded-md px-1.5 py-0.5 text-[10px] font-bold uppercase"
@@ -67,13 +67,13 @@ export default async function BadgesPage() {
                 {rule ? ruleLabel(rule) : "Special"}
               </div>
 
-              <div className="mt-4 flex items-center justify-between border-t border-white/5 pt-3">
+              <div className="mt-4 flex items-center justify-between border-t border-line/5 pt-3">
                 <div className="flex -space-x-2">
                   {b.employees.slice(0, 5).map((eb) => (
                     <span
                       key={eb.id}
                       title={eb.employee.name}
-                      className="grid h-7 w-7 place-items-center rounded-full border-2 border-ink-850 text-[9px] font-bold text-ink-950"
+                      className="grid h-7 w-7 place-items-center rounded-full border-2 border-ink-850 text-[9px] font-bold text-[#0a0a0a]"
                       style={{ background: eb.employee.avatarColor }}
                     >
                       {eb.employee.name.split(" ").map((x) => x[0]).slice(0, 2).join("")}
@@ -83,7 +83,7 @@ export default async function BadgesPage() {
                     <span className="text-xs text-slate-600">Not yet earned</span>
                   )}
                   {holders > 5 && (
-                    <span className="grid h-7 w-7 place-items-center rounded-full border-2 border-ink-850 bg-white/10 text-[9px] font-bold text-slate-300">
+                    <span className="grid h-7 w-7 place-items-center rounded-full border-2 border-ink-850 bg-line/10 text-[9px] font-bold text-slate-300">
                       +{holders - 5}
                     </span>
                   )}

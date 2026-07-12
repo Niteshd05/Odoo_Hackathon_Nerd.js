@@ -61,9 +61,9 @@ export default async function DashboardPage() {
     await getDashboardData();
 
   const pillarDonut = [
-    { label: "Environmental", value: org.environmental, color: "#9CB84A" },
-    { label: "Social", value: org.social, color: "#5BA894" },
-    { label: "Governance", value: org.governance, color: "#CB7A4E" },
+    { label: "Environmental", value: org.environmental, color: "#FFE600" },
+    { label: "Social", value: org.social, color: "#A1A1AA" },
+    { label: "Governance", value: org.governance, color: "#71717A" },
   ];
   const deptRank = org.departments.map((d) => ({
     label: d.code,
@@ -123,17 +123,17 @@ export default async function DashboardPage() {
                   <span className="h-2.5 w-2.5 rounded-full" style={{ background: p.color }} />
                   {p.label}
                 </span>
-                <span className="font-semibold text-white">{p.value.toFixed(1)}</span>
+                <span className="font-semibold text-fg">{p.value.toFixed(1)}</span>
               </div>
             ))}
           </div>
         </div>
 
         <div className="grid grid-cols-2 gap-4 lg:col-span-1">
-          <StatCard label="Environmental" value={org.environmental.toFixed(0)} icon="Leaf" accent="#9CB84A" hint={scoreGrade(org.environmental).label} />
-          <StatCard label="Social" value={org.social.toFixed(0)} icon="HeartHandshake" accent="#5BA894" hint={scoreGrade(org.social).label} />
-          <StatCard label="Governance" value={org.governance.toFixed(0)} icon="Scale" accent="#CB7A4E" hint={scoreGrade(org.governance).label} />
-          <StatCard label="Total CO2" value={formatCO2(org.totalCO2)} icon="Factory" accent="#E0A838" hint="all sources" />
+          <StatCard label="Environmental" value={org.environmental.toFixed(0)} icon="Leaf" accent="#FFE600" hint={scoreGrade(org.environmental).label} />
+          <StatCard label="Social" value={org.social.toFixed(0)} icon="HeartHandshake" accent="#A1A1AA" hint={scoreGrade(org.social).label} />
+          <StatCard label="Governance" value={org.governance.toFixed(0)} icon="Scale" accent="#71717A" hint={scoreGrade(org.governance).label} />
+          <StatCard label="Total CO2" value={formatCO2(org.totalCO2)} icon="Factory" accent="#FFE600" hint="all sources" />
         </div>
       </div>
 
@@ -145,7 +145,7 @@ export default async function DashboardPage() {
             subtitle="Total ESG score by department"
             icon="Trophy"
             right={
-              <Link href="/settings" className="chip hover:border-white/20">
+              <Link href="/settings" className="chip hover:border-line/20">
                 <Icon name="SlidersHorizontal" className="h-3 w-3" />
                 Weights
               </Link>
@@ -161,10 +161,10 @@ export default async function DashboardPage() {
 
       {/* Quick actions row */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <QuickAction href="/gamification/challenges" icon="Trophy" accent="#5BA894" title="Approvals waiting" value={`${pendingApprovals} pending`} />
-        <QuickAction href="/gamification/challenges" icon="Zap" accent="#E0A838" title="Active challenges" value={`${activeChallenges} running`} />
-        <QuickAction href="/environmental" icon="Leaf" accent="#9CB84A" title="Carbon dashboard" value="Live tracking" />
-        <QuickAction href="/copilot" icon="Sparkles" accent="#CB7A4E" title="ESG Copilot" value="Ask anything" />
+        <QuickAction href="/gamification/challenges" icon="Trophy" accent="#A1A1AA" title="Approvals waiting" value={`${pendingApprovals} pending`} />
+        <QuickAction href="/gamification/challenges" icon="Zap" accent="#FFE600" title="Active challenges" value={`${activeChallenges} running`} />
+        <QuickAction href="/environmental" icon="Leaf" accent="#FFE600" title="Carbon dashboard" value="Live tracking" />
+        <QuickAction href="/copilot" icon="Sparkles" accent="#71717A" title="ESG Copilot" value="Ask anything" />
       </div>
 
       {/* Department table */}
@@ -188,7 +188,7 @@ export default async function DashboardPage() {
                 return (
                   <tr key={d.departmentId} className="table-row">
                     <td className="py-3">
-                      <div className="font-medium text-white">{d.name}</div>
+                      <div className="font-medium text-fg">{d.name}</div>
                       <div className="text-xs text-slate-500">{d.employeeCount} employees</div>
                     </td>
                     <td className="py-3 text-right font-medium text-env">{d.environmentalScore.toFixed(0)}</td>
@@ -234,14 +234,14 @@ function QuickAction({
   return (
     <Link href={href} className="card glass-hover group flex items-center gap-3">
       <div
-        className="grid h-11 w-11 place-items-center rounded-xl border border-white/10"
+        className="grid h-11 w-11 place-items-center rounded-xl border border-line/10"
         style={{ background: `${accent}18` }}
       >
         <Icon name={icon} className="h-5 w-5" style={{ color: accent }} />
       </div>
       <div className="flex-1">
         <div className="text-xs text-slate-500">{title}</div>
-        <div className="text-sm font-semibold text-white">{value}</div>
+        <div className="text-sm font-semibold text-fg">{value}</div>
       </div>
       <Icon name="ArrowUpRight" className="h-4 w-4 text-slate-600 transition group-hover:text-slate-300" />
     </Link>

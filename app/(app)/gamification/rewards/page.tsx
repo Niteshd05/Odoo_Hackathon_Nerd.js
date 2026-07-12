@@ -25,13 +25,13 @@ export default async function RewardsPage() {
         eyebrow="Gamification"
         title="Rewards"
         icon="Gift"
-        accent="#9CB84A"
+        accent="#FFE600"
         description="Spend points earned from challenges. Redemption checks stock and deducts points."
         actions={
           user && (
-            <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2">
+            <div className="flex items-center gap-2 rounded-full border border-line/10 bg-line/5 px-4 py-2">
               <Icon name="Coins" className="h-4 w-4 text-gold" />
-              <span className="text-sm font-semibold text-white">{formatNumber(user.points)}</span>
+              <span className="text-sm font-semibold text-fg">{formatNumber(user.points)}</span>
               <span className="text-xs text-slate-500">points as {user.name.split(" ")[0]}</span>
             </div>
           )
@@ -59,15 +59,15 @@ export default async function RewardsPage() {
         ) : (
           <div className="space-y-1">
             {redemptions.map((r) => (
-              <div key={r.id} className="flex items-center gap-3 rounded-lg px-2 py-2.5 transition hover:bg-white/[0.03]">
+              <div key={r.id} className="flex items-center gap-3 rounded-lg px-2 py-2.5 transition hover:bg-line/[0.03]">
                 <span
-                  className="grid h-8 w-8 place-items-center rounded-full text-[10px] font-bold text-ink-950"
+                  className="grid h-8 w-8 place-items-center rounded-full text-[10px] font-bold text-[#0a0a0a]"
                   style={{ background: r.employee.avatarColor }}
                 >
                   {r.employee.name.split(" ").map((x) => x[0]).slice(0, 2).join("")}
                 </span>
                 <span className="text-sm text-slate-300">
-                  <span className="font-medium text-white">{r.employee.name}</span> redeemed{" "}
+                  <span className="font-medium text-fg">{r.employee.name}</span> redeemed{" "}
                   <span className="text-env">{r.reward.name}</span>
                 </span>
                 <span className="ml-auto text-xs text-slate-500">

@@ -12,10 +12,10 @@ import { formatCO2, formatNumber, scoreColor } from "@/lib/utils";
 export const dynamic = "force-dynamic";
 
 const SOURCE_COLOR: Record<string, string> = {
-  Purchase: "#5BA894",
-  Manufacturing: "#9CB84A",
-  Expense: "#E0A838",
-  Fleet: "#CB7A4E",
+  Purchase: "#A1A1AA",
+  Manufacturing: "#FFE600",
+  Expense: "#FFE600",
+  Fleet: "#71717A",
   Other: "#94a3b8",
 };
 
@@ -65,10 +65,10 @@ export default async function EnvironmentalDashboard() {
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {[
-          { label: "Total CO2", value: formatCO2(totalCO2), icon: "Cloud", accent: "#9CB84A", hint: "all sources" },
-          { label: "This month", value: formatCO2(thisMonth), icon: "CalendarDays", accent: "#5BA894" },
-          { label: "Env score", value: org.environmental.toFixed(0), icon: "Gauge", accent: "#CB7A4E", hint: "org average" },
-          { label: "Active goals", value: activeGoals, icon: "Target", accent: "#E0A838", hint: anomalies ? `${anomalies} anomalies` : "no anomalies" },
+          { label: "Total CO2", value: formatCO2(totalCO2), icon: "Cloud", accent: "#FFE600", hint: "all sources" },
+          { label: "This month", value: formatCO2(thisMonth), icon: "CalendarDays", accent: "#A1A1AA" },
+          { label: "Env score", value: org.environmental.toFixed(0), icon: "Gauge", accent: "#71717A", hint: "org average" },
+          { label: "Active goals", value: activeGoals, icon: "Target", accent: "#FFE600", hint: anomalies ? `${anomalies} anomalies` : "no anomalies" },
         ].map((stat, i) => (
           <div key={stat.label} className={`delay-${(i + 1) * 100} animate-scale-in`} style={{ animationFillMode: "both" }}>
             <StatCard {...(stat as any)} />
@@ -80,7 +80,7 @@ export default async function EnvironmentalDashboard() {
         <div className="card lg:col-span-2">
           <SectionTitle title="Emissions by department" subtitle="Total CO2 (kg) per department" icon="BarChart3" />
           <GroupedBar
-            data={byDept.map((d) => ({ label: d.code, value: d.value, color: "#9CB84A" }))}
+            data={byDept.map((d) => ({ label: d.code, value: d.value, color: "#FFE600" }))}
             unit=" kg"
           />
         </div>
@@ -115,7 +115,7 @@ export default async function EnvironmentalDashboard() {
             title="Department carbon vs goal"
             subtitle="Actual emissions against each cap"
             icon="Target"
-            right={<Link href="/environmental/goals" className="chip hover:border-white/20">Manage goals</Link>}
+            right={<Link href="/environmental/goals" className="chip hover:border-line/20">Manage goals</Link>}
           />
           <div className="space-y-3.5">
             {org.departments.map((d) => {

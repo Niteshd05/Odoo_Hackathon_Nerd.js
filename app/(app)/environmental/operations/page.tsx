@@ -78,11 +78,11 @@ export default async function OperationsPage() {
                     <tr key={op.id} className="table-row">
                       <td className="py-3">
                         <div className="flex items-center gap-2.5">
-                          <div className="grid h-8 w-8 place-items-center rounded-lg bg-white/5">
+                          <div className="grid h-8 w-8 place-items-center rounded-lg bg-line/5">
                             <Icon name={TYPE_ICON[op.type] ?? "Box"} className="h-4 w-4 text-slate-300" />
                           </div>
                           <div>
-                            <div className="font-medium text-white">{op.type}</div>
+                            <div className="font-medium text-fg">{op.type}</div>
                             <div className="text-xs text-slate-500">{op.description ?? "-"}</div>
                           </div>
                         </div>

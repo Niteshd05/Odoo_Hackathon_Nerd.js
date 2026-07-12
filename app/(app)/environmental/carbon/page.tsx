@@ -32,10 +32,10 @@ export default async function CarbonLedgerPage() {
       />
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard label="Total CO2" value={formatCO2(total)} icon="Cloud" accent="#9CB84A" />
-        <StatCard label="Transactions" value={formatNumber(count)} icon="Rows3" accent="#5BA894" />
-        <StatCard label="Auto-calculated" value={`${count ? Math.round((autoCount / count) * 100) : 0}%`} icon="Zap" accent="#E0A838" hint="of all records" />
-        <StatCard label="Anomalies flagged" value={anomalyCount} icon="AlertTriangle" accent={anomalyCount ? "#f87171" : "#9CB84A"} hint="outlier detection" />
+        <StatCard label="Total CO2" value={formatCO2(total)} icon="Cloud" accent="#FFE600" />
+        <StatCard label="Transactions" value={formatNumber(count)} icon="Rows3" accent="#A1A1AA" />
+        <StatCard label="Auto-calculated" value={`${count ? Math.round((autoCount / count) * 100) : 0}%`} icon="Zap" accent="#FFE600" hint="of all records" />
+        <StatCard label="Anomalies flagged" value={anomalyCount} icon="AlertTriangle" accent={anomalyCount ? "#f87171" : "#FFE600"} hint="outlier detection" />
       </div>
 
       <div className="card">
@@ -72,7 +72,7 @@ export default async function CarbonLedgerPage() {
                           </span>
                         )}
                         <div>
-                          <div className="font-medium text-white">
+                          <div className="font-medium text-fg">
                             {t.operationRecord?.type ?? "Manual"}
                           </div>
                           <div className="text-xs text-slate-500">{t.emissionFactor.name}</div>

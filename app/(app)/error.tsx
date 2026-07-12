@@ -9,7 +9,7 @@ export default function Error({ reset }: { error: Error; reset: () => void }) {
         <div className="mx-auto mb-4 grid h-14 w-14 place-items-center rounded-2xl bg-red-400/10">
           <Icon name="TriangleAlert" className="h-6 w-6 text-red-400" />
         </div>
-        <h1 className="text-xl font-bold text-white">Something went wrong</h1>
+        <h1 className="text-xl font-bold text-fg">Something went wrong</h1>
         <p className="mt-2 text-sm text-slate-400">
           This screen hit an unexpected error. Your data is safe - try again.
         </p>

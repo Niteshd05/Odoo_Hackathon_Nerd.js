@@ -1,40 +1,65 @@
 import { prisma } from "@/lib/prisma";
+import { getCurrentUser } from "@/lib/session";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { StatCard } from "@/components/ui/StatCard";
-import { SectionTitle, StatusPill } from "@/components/ui/misc";
-import { Icon } from "@/components/ui/Icon";
+import { SectionTitle } from "@/components/ui/misc";
 import { Donut } from "@/components/charts/Charts";
-import { shortDate } from "@/lib/utils";
+import { SocialBoard, type SocialActivity } from "@/components/social/SocialBoard";
 
 export const dynamic = "force-dynamic";
 
 const CAT_COLOR: Record<string, string> = {
-  Environment: "#9CB84A",
-  Education: "#5BA894",
-  Health: "#B08556",
-  Community: "#E0A838",
-  Diversity: "#CB7A4E",
+  Environment: "#FFE600",
+  Education: "#60A5FA",
+  Health: "#F472B6",
+  Community: "#34D399",
+  Diversity: "#A855F7",
 };
 
 export default async function SocialPage() {
-  const [activities, participationCount, hours] = await Promise.all([
+  const user = await getCurrentUser();
+  const canManage = user?.role === "Admin" || user?.role === "Manager";
+
+  const [activities, departments, participationCount, hours] = await Promise.all([
     prisma.cSRActivity.findMany({
-      include: { department: true, _count: { select: { participants: true } } },
+      include: { department: true, participants: { include: { employee: true } } },
       orderBy: { date: "desc" },
     }),
+    prisma.department.findMany({ orderBy: { name: "asc" } }),
     prisma.employeeParticipation.count(),
     prisma.employeeParticipation.aggregate({ _sum: { hours: true } }),
   ]);
 
   const byCategory = new Map<string, number>();
-  for (const a of activities) {
-    byCategory.set(a.category, (byCategory.get(a.category) ?? 0) + 1);
-  }
+  for (const a of activities) byCategory.set(a.category, (byCategory.get(a.category) ?? 0) + 1);
   const donutData = Array.from(byCategory.entries()).map(([label, value]) => ({
     label,
     value,
-    color: CAT_COLOR[label] ?? "#94a3b8",
+    color: CAT_COLOR[label] ?? "#A1A1AA",
   }));
+
+  const board: SocialActivity[] = activities.map((a) => {
+    const parts = a.participants.map((p) => ({
+      id: p.employee.id,
+      name: p.employee.name,
+      color: p.employee.avatarColor,
+      hours: p.hours,
+    }));
+    const mine = a.participants.find((p) => p.employeeId === user?.id);
+    return {
+      id: a.id,
+      title: a.title,
+      category: a.category,
+      department: a.department?.name ?? null,
+      impact: a.impact,
+      status: a.status,
+      date: a.date.toISOString(),
+      participants: parts,
+      totalHours: parts.reduce((s, p) => s + p.hours, 0),
+      joined: !!mine,
+      myHours: mine?.hours ?? 0,
+    };
+  });
 
   return (
     <div className="animate-fade-up space-y-6">
@@ -42,55 +67,26 @@ export default async function SocialPage() {
         eyebrow="Social"
         title="CSR & Community"
         icon="HeartHandshake"
-        accent="#5BA894"
-        description="Corporate social responsibility activity across the organization."
+        accent="#A1A1AA"
+        description="Launch initiatives, volunteer, and log hours. Fully interactive across the organization."
       />
 
-      <div className="rounded-xl border border-social/20 bg-social/[0.06] px-4 py-2.5 text-sm text-social">
-        <Icon name="Info" className="mr-1.5 inline h-4 w-4" />
-        The Social pillar is a seeded, read-only slice for this demo. The full participation
-        approval workflow is intentionally out of scope, so the team could go deep on the
-        Environmental and Gamification flows.
-      </div>
-
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard label="CSR activities" value={activities.length} icon="Sprout" accent="#9CB84A" />
-        <StatCard label="Volunteer hours" value={Math.round(hours._sum.hours ?? 0)} icon="Clock" accent="#5BA894" />
-        <StatCard label="Participations" value={participationCount} icon="Users" accent="#CB7A4E" />
-        <StatCard label="Categories" value={donutData.length} icon="Tags" accent="#E0A838" />
+        <StatCard label="CSR activities" value={activities.length} icon="Sprout" accent="#FFE600" />
+        <StatCard label="Volunteer hours" value={Math.round(hours._sum.hours ?? 0)} icon="Clock" accent="#60A5FA" />
+        <StatCard label="Participations" value={participationCount} icon="Users" accent="#A855F7" />
+        <StatCard label="Categories" value={donutData.length} icon="Tags" accent="#34D399" />
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-3">
-        <div className="card lg:col-span-2">
-          <SectionTitle title="Activities" subtitle="Recent community and CSR initiatives" icon="CalendarHeart" />
-          <div className="space-y-2.5">
-            {activities.map((a) => (
-              <div key={a.id} className="flex items-center gap-3 rounded-xl border border-white/8 bg-white/[0.02] p-3.5">
-                <div
-                  className="grid h-10 w-10 shrink-0 place-items-center rounded-xl"
-                  style={{ background: `${CAT_COLOR[a.category] ?? "#94a3b8"}20` }}
-                >
-                  <Icon name="HandHeart" className="h-5 w-5" style={{ color: CAT_COLOR[a.category] ?? "#94a3b8" }} />
-                </div>
-                <div className="min-w-0 flex-1">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span className="font-medium text-white">{a.title}</span>
-                    <StatusPill status={a.status} />
-                  </div>
-                  <div className="text-xs text-slate-500">
-                    {a.category} · {a.department?.name ?? "Org-wide"} · {a._count.participants} volunteers
-                  </div>
-                </div>
-                <div className="hidden text-right sm:block">
-                  <div className="text-sm font-medium text-social">{a.impact}</div>
-                  <div className="text-xs text-slate-500">{shortDate(a.date)}</div>
-                </div>
-              </div>
-            ))}
-          </div>
+      <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
+        <div>
+          <SocialBoard
+            activities={board}
+            departments={departments.map((d) => ({ id: d.id, name: d.name }))}
+            canManage={canManage}
+          />
         </div>
-
-        <div className="card">
+        <div className="card h-fit">
           <SectionTitle title="Activity mix" subtitle="By category" icon="PieChart" />
           <Donut data={donutData} centerValue={String(activities.length)} centerLabel="Activities" />
           <div className="mt-3 space-y-1.5">

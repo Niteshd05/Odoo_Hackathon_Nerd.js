@@ -1,29 +1,13 @@
 import type { Metadata } from "next";
-import { Instrument_Sans, Fraunces, JetBrains_Mono } from "next/font/google";
+import { Manrope, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import { Toaster } from "sonner";
 import "./globals.css";
 
-// Instrument Sans (humanist body) + Fraunces (characterful serif for display
-// numerals) gives the app an editorial, hand-crafted feel - not the default
-// Inter-on-dark look.
-const sans = Instrument_Sans({
-  subsets: ["latin"],
-  variable: "--font-sans",
-  display: "swap",
-});
-
-const display = Fraunces({
-  subsets: ["latin"],
-  variable: "--font-display",
-  display: "swap",
-  axes: ["opsz", "SOFT"],
-});
-
-const mono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-  display: "swap",
-});
+// Manrope (clean geometric body) + Space Grotesk (bold, characterful display)
+// for a maximalist, gamified feel.
+const sans = Manrope({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
+const display = Space_Grotesk({ subsets: ["latin"], variable: "--font-display", display: "swap" });
+const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono", display: "swap" });
 
 export const metadata: Metadata = {
   title: "EcoSphere - ESG Management Platform",
@@ -31,27 +15,24 @@ export const metadata: Metadata = {
     "Measure and improve Environmental, Social, and Governance performance from one dashboard, with a live scoring engine and an AI ESG Copilot.",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+// Set the theme before paint to avoid a flash of the wrong theme.
+const themeScript = `(function(){try{var t=localStorage.getItem('ecosphere-theme')||'dark';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();`;
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="en"
-      className={`${sans.variable} ${display.variable} ${mono.variable} dark`}
-    >
+    <html lang="en" data-theme="dark" className={`${sans.variable} ${display.variable} ${mono.variable}`}>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body className="font-sans">
         {children}
         <Toaster
-          theme="dark"
           position="bottom-right"
           toastOptions={{
             style: {
-              background: "rgba(32,27,16,0.92)",
-              border: "1px solid rgba(217,201,163,0.14)",
-              backdropFilter: "blur(12px)",
-              color: "#E9E0CE",
+              background: "rgb(21 21 21)",
+              border: "1px solid rgb(255 255 255 / 0.12)",
+              color: "#FAFAFA",
             },
           }}
         />
