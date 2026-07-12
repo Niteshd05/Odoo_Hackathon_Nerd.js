@@ -43,12 +43,11 @@ export function scoreGrade(score: number): { grade: string; label: string } {
   return { grade: "E", label: "Critical" };
 }
 
-/** Map an ESG score to a tailwind-ish hex for gauges and rings. */
+/** Map an ESG score to a hex for gauges and rings (maximalist yellow/grey/red). */
 export function scoreColor(score: number): string {
-  if (score >= 80) return "#9CB84A"; // env green
-  if (score >= 65) return "#5BA894"; // social blue
-  if (score >= 50) return "#E0A838"; // gold
-  return "#f87171"; // red
+  if (score >= 75) return "#FFE600"; // accent yellow - strong
+  if (score >= 55) return "#A1A1AA"; // neutral grey - fair
+  return "#FF5C4A"; // red - at risk
 }
 
 /** Clamp a number to a range. */
@@ -58,7 +57,7 @@ export function clamp(n: number, min: number, max: number): number {
 
 /** Title-cased pillar accent tokens for consistent theming. */
 export const PILLAR = {
-  Environmental: { color: "#9CB84A", key: "env" },
-  Social: { color: "#5BA894", key: "social" },
-  Governance: { color: "#CB7A4E", key: "gov" },
+  Environmental: { color: "#FFE600", key: "env" },
+  Social: { color: "#A1A1AA", key: "social" },
+  Governance: { color: "#71717A", key: "gov" },
 } as const;

@@ -126,7 +126,7 @@ export function CopilotChat({ available }: { available: boolean }) {
               </motion.span>
             </div>
 
-            <h3 className="mt-4 text-lg font-semibold text-white">Ask the ESG Copilot</h3>
+            <h3 className="mt-4 text-lg font-semibold text-fg">Ask the ESG Copilot</h3>
             <p className="mt-1 max-w-sm text-sm text-slate-500">
               Grounded answers over your live ESG data, with citations to the exact records used.
             </p>
@@ -140,7 +140,7 @@ export function CopilotChat({ available }: { available: boolean }) {
                   animate="show"
                   onClick={() => ask(s)}
                   disabled={!available}
-                  className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-left text-xs text-slate-300 transition-all duration-300 hover:border-gov/40 hover:bg-white/[0.08] hover:text-white disabled:opacity-40"
+                  className="rounded-full border border-line/10 bg-line/5 px-3 py-1.5 text-left text-xs text-slate-300 transition-all duration-300 hover:border-gov/40 hover:bg-line/[0.08] hover:text-fg disabled:opacity-40"
                 >
                   {s}
                 </motion.button>
@@ -166,8 +166,8 @@ export function CopilotChat({ available }: { available: boolean }) {
               <div
                 className={
                   m.role === "user"
-                    ? "max-w-[80%] rounded-2xl rounded-br-sm bg-gradient-to-b from-env to-env-deep px-4 py-2.5 text-sm font-medium text-ink-950 shadow-glow"
-                    : "max-w-[85%] rounded-2xl rounded-tl-sm border border-white/[0.06] bg-white/[0.02] px-4 py-3 backdrop-blur-sm"
+                    ? "max-w-[80%] rounded-2xl rounded-br-sm bg-gradient-to-b from-env to-env-deep px-4 py-2.5 text-sm font-medium text-[#0a0a0a] shadow-glow"
+                    : "max-w-[85%] rounded-2xl rounded-tl-sm border border-line/[0.06] bg-line/[0.02] px-4 py-3 backdrop-blur-sm"
                 }
               >
                 {m.role === "user" ? (
@@ -203,7 +203,7 @@ export function CopilotChat({ available }: { available: boolean }) {
       </div>
 
       {/* Composer */}
-      <div className="relative z-10 border-t border-white/5 p-4">
+      <div className="relative z-10 border-t border-line/5 p-4">
         <form
           onSubmit={(e) => {
             e.preventDefault();

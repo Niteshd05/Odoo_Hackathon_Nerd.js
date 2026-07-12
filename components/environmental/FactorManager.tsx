@@ -25,10 +25,10 @@ type Factor = {
 
 const TYPES = ["Purchase", "Manufacturing", "Expense", "Fleet"];
 const TYPE_COLOR: Record<string, string> = {
-  Purchase: "#5BA894",
-  Manufacturing: "#9CB84A",
-  Expense: "#E0A838",
-  Fleet: "#CB7A4E",
+  Purchase: "#A1A1AA",
+  Manufacturing: "#FFE600",
+  Expense: "#FFE600",
+  Fleet: "#71717A",
 };
 
 export function FactorManager({ factors }: { factors: Factor[] }) {
@@ -108,10 +108,10 @@ export function FactorManager({ factors }: { factors: Factor[] }) {
                 <StatusPill status={f.status} />
               </div>
               <div className="flex gap-1 opacity-0 transition group-hover:opacity-100">
-                <button onClick={() => openEdit(f)} className="rounded-md p-1.5 text-slate-400 hover:bg-white/5 hover:text-white">
+                <button onClick={() => openEdit(f)} className="rounded-md p-1.5 text-slate-400 hover:bg-line/5 hover:text-fg">
                   <Icon name="Pencil" className="h-3.5 w-3.5" />
                 </button>
-                <button onClick={() => toggle(f.id)} className="rounded-md p-1.5 text-slate-400 hover:bg-white/5 hover:text-white">
+                <button onClick={() => toggle(f.id)} className="rounded-md p-1.5 text-slate-400 hover:bg-line/5 hover:text-fg">
                   <Icon name={f.status === "Active" ? "PowerOff" : "Power"} className="h-3.5 w-3.5" />
                 </button>
                 <button onClick={() => remove(f.id)} className="rounded-md p-1.5 text-slate-400 hover:bg-red-400/10 hover:text-red-400">
@@ -119,7 +119,7 @@ export function FactorManager({ factors }: { factors: Factor[] }) {
                 </button>
               </div>
             </div>
-            <h3 className="mt-3 font-semibold text-white">{f.name}</h3>
+            <h3 className="mt-3 font-semibold text-fg">{f.name}</h3>
             <div className="mt-1 flex items-baseline gap-1.5">
               <span className="text-2xl font-bold" style={{ color: TYPE_COLOR[f.sourceType] }}>
                 {f.factor}

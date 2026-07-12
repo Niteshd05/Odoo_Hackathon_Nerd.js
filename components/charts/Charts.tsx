@@ -40,7 +40,7 @@ const chartEntrance = {
 export function TrendArea({
   data,
   dataKey = "value",
-  color = "#9CB84A",
+  color = "#FFE600",
   height = 240,
   unit = "",
 }: {
@@ -127,7 +127,7 @@ export function RankBar({
           />
           <Bar dataKey="value" radius={[0, 8, 8, 0]} barSize={18} animationDuration={1200} animationEasing="ease-out">
             {data.map((d, i) => (
-              <Cell key={i} fill={d.color ?? "#9CB84A"} />
+              <Cell key={i} fill={d.color ?? "#FFE600"} />
             ))}
           </Bar>
         </BarChart>
@@ -159,7 +159,7 @@ export function GroupedBar({
           />
           <Bar dataKey="value" radius={[8, 8, 0, 0]} barSize={34} animationDuration={1200} animationEasing="ease-out">
             {data.map((d, i) => (
-              <Cell key={i} fill={d.color ?? "#9CB84A"} />
+              <Cell key={i} fill={d.color ?? "#FFE600"} />
             ))}
           </Bar>
         </BarChart>
@@ -219,7 +219,7 @@ export function Donut({
             transition={{ delay: 0.4, duration: 0.5 }}
           >
             {centerValue && (
-              <div className="text-2xl font-bold text-white">{centerValue}</div>
+              <div className="text-2xl font-bold text-fg">{centerValue}</div>
             )}
             {centerLabel && (
               <div className="text-[11px] uppercase tracking-widest text-slate-500">

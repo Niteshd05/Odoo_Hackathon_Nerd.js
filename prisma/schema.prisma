@@ -6,8 +6,13 @@ generator client {
   provider = "prisma-client-js"
 }
 
+// Local dev uses SQLite (zero-config). For a scalable Vercel deployment, switch
+// `provider` to "postgresql" and point DATABASE_URL at a hosted Postgres (Neon,
+// Supabase, Vercel Postgres). Uncomment `directUrl` for Neon connection pooling.
+// See DEPLOYMENT.md for the full, copy-paste steps. The schema itself is
+// portable - enums are modelled as Strings, so no changes are needed.
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 

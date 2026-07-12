@@ -91,7 +91,8 @@ async function main() {
   // Employees (1 Admin, a few Managers, rest Employees)
   // ---------------------------------------------------------------
   console.log("Seeding employees...");
-  const colors = ["#9CB84A", "#5BA894", "#CB7A4E", "#E0A838", "#B08556", "#5BA894", "#fb923c", "#9CB84A"];
+  // Vibrant, gamified identity colors (dark initials read on all of them).
+  const colors = ["#FFE600", "#FF5C4A", "#22D3EE", "#A855F7", "#34D399", "#F472B6", "#FB923C", "#60A5FA"];
   const employeeData = [
     { name: "Priya Menon", email: "priya.menon@ecosphere.io", role: "Admin", code: "CORP", title: "Chief Sustainability Officer", xp: 2100, points: 1400 },
     { name: "Rahul Verma", email: "rahul.verma@ecosphere.io", role: "Manager", code: "MFG", title: "Plant Manager", xp: 1650, points: 900 },

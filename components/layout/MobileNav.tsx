@@ -25,10 +25,10 @@ export function MobileNav({ role }: { role: string }) {
   let itemIndex = 0;
 
   return (
-    <div className="border-b border-white/5 px-4 py-3 lg:hidden">
+    <div className="border-b border-line/5 px-4 py-3 lg:hidden">
       <button
         onClick={() => setOpen(true)}
-        className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-slate-200 transition-all duration-300 hover:border-white/20 hover:bg-white/10"
+        className="flex items-center gap-2 rounded-xl border border-line/10 bg-line/5 px-3 py-2 text-sm text-slate-200 transition-all duration-300 hover:border-line/20 hover:bg-line/10"
       >
         <Icon name="Menu" className="h-4 w-4" />
         Menu
@@ -48,12 +48,12 @@ export function MobileNav({ role }: { role: string }) {
               animate={{ x: 0 }}
               exit={{ x: -320 }}
               transition={{ type: "spring", stiffness: 400, damping: 40 }}
-              className="h-full w-72 overflow-y-auto border-r border-white/[0.08] bg-ink-900/90 backdrop-blur-2xl p-4"
+              className="h-full w-72 overflow-y-auto border-r border-line/[0.08] bg-ink-900/90 backdrop-blur-2xl p-4"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="mb-4 flex items-center justify-between">
-                <span className="text-lg font-bold text-white">EcoSphere</span>
-                <button onClick={() => setOpen(false)} className="rounded-lg p-1 transition hover:bg-white/10">
+                <span className="text-lg font-bold text-fg">EcoSphere</span>
+                <button onClick={() => setOpen(false)} className="rounded-lg p-1 transition hover:bg-line/10">
                   <Icon name="X" className="h-5 w-5 text-slate-400" />
                 </button>
               </div>
@@ -82,8 +82,8 @@ export function MobileNav({ role }: { role: string }) {
                           className={cn(
                             "flex items-center gap-3 rounded-lg px-2 py-2 text-sm transition-all duration-200",
                             active
-                              ? "bg-white/10 text-white"
-                              : "text-slate-400 hover:bg-white/5 hover:text-slate-200",
+                              ? "bg-line/10 text-fg"
+                              : "text-slate-400 hover:bg-line/5 hover:text-slate-200",
                           )}
                         >
                           <Icon name={item.icon} className={cn("h-4 w-4", active && "text-env")} />

@@ -131,7 +131,7 @@ export function ScoreRing({
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3, duration: 0.5 }}
-            className="text-5xl font-bold tracking-tight text-white"
+            className="text-5xl font-bold tracking-tight text-fg"
           >
             {displayValue.toFixed(1)}
           </motion.div>

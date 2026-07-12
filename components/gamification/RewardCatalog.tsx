@@ -87,11 +87,11 @@ export function RewardCatalog({
                 {inStock ? `${r.stock} in stock` : "Out of stock"}
               </span>
             </div>
-            <h3 className="mt-3 font-semibold text-white relative z-10">{r.name}</h3>
+            <h3 className="mt-3 font-semibold text-fg relative z-10">{r.name}</h3>
             <p className="mt-1 flex-1 text-xs text-slate-500 relative z-10">{r.description}</p>
 
             <div className="mt-4 flex items-center justify-between relative z-10">
-              <span className="flex items-center gap-1.5 text-lg font-bold text-white">
+              <span className="flex items-center gap-1.5 text-lg font-bold text-fg">
                 <Icon name="Coins" className="h-4 w-4 text-gold" />
                 {formatNumber(r.pointsRequired)}
                 <span className="text-xs font-normal text-slate-500">pts</span>

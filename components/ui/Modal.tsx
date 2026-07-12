@@ -11,7 +11,7 @@ export function Modal({
   description,
   children,
   icon,
-  accent = "#9CB84A",
+  accent = "#FFE600",
 }: {
   open: boolean;
   onClose: () => void;
@@ -63,21 +63,21 @@ export function Modal({
                   initial={{ scale: 0.8, rotate: -10 }}
                   animate={{ scale: 1, rotate: 0 }}
                   transition={{ delay: 0.15, type: "spring", stiffness: 400, damping: 15 }}
-                  className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-white/10"
+                  className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-line/10"
                   style={{ background: `${accent}18` }}
                 >
                   <Icon name={icon} className="h-5 w-5" style={{ color: accent }} />
                 </motion.div>
               )}
               <div className="flex-1">
-                <h2 className="text-lg font-bold text-white">{title}</h2>
+                <h2 className="text-lg font-bold text-fg">{title}</h2>
                 {description && (
                   <p className="mt-0.5 text-sm text-slate-400">{description}</p>
                 )}
               </div>
               <button
                 onClick={onClose}
-                className="rounded-lg p-1 text-slate-500 transition-all duration-200 hover:bg-white/5 hover:text-slate-200 hover:rotate-90"
+                className="rounded-lg p-1 text-slate-500 transition-all duration-200 hover:bg-line/5 hover:text-slate-200 hover:rotate-90"
               >
                 <Icon name="X" className="h-5 w-5" />
               </button>

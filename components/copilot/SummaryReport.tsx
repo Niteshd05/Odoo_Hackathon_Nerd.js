@@ -72,13 +72,13 @@ export function SummaryReport({
           <Icon name="FileText" className="h-4 w-4 text-gov-soft" />
         </div>
         <div className="flex-1">
-          <h3 className="text-sm font-semibold text-white">ESG Summary Report</h3>
+          <h3 className="text-sm font-semibold text-fg">ESG Summary Report</h3>
           <p className="text-xs text-slate-500">AI-written, grounded in live data</p>
         </div>
       </div>
 
       {!data ? (
-        <div className="relative z-10 flex flex-1 flex-col items-center justify-center rounded-xl border border-dashed border-white/10 px-4 py-10 text-center">
+        <div className="relative z-10 flex flex-1 flex-col items-center justify-center rounded-xl border border-dashed border-line/10 px-4 py-10 text-center">
           <motion.div animate={{ y: [0, -4, 0] }} transition={{ duration: 3, repeat: Infinity }}>
             <Icon name="FileSparkles" className="h-8 w-8 text-slate-600" />
           </motion.div>
@@ -130,14 +130,14 @@ export function SummaryReport({
               <Icon name={loading ? "Loader2" : "RefreshCw"} className={`h-3.5 w-3.5 ${loading ? "animate-spin" : ""}`} /> Regenerate
             </button>
             <span className="ml-auto text-[11px] text-slate-500">
-              {data.recordCount} records · {data.model}
+              Grounded in {data.recordCount} records
             </span>
           </div>
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="relative z-10 no-scrollbar max-h-[440px] overflow-y-auto rounded-xl border border-white/[0.06] bg-white/[0.02] p-5 backdrop-blur-sm"
+            className="relative z-10 no-scrollbar max-h-[440px] overflow-y-auto rounded-xl border border-line/[0.06] bg-line/[0.02] p-5 backdrop-blur-sm"
           >
             <RichText text={data.markdown} />
           </motion.div>

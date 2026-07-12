@@ -34,10 +34,10 @@ const TYPE_CONFIG: Record<string, { shape: string; icon: string }> = {
 };
 
 const LEGEND = [
-  { type: "department", label: "Departments", color: "#9CB84A" },
-  { type: "factor", label: "Emission Factors", color: "#5BA894" },
-  { type: "policy", label: "Policies", color: "#CB7A4E" },
-  { type: "challenge", label: "Challenges", color: "#E0A838" },
+  { type: "department", label: "Departments", color: "#FFE600" },
+  { type: "factor", label: "Emission Factors", color: "#A1A1AA" },
+  { type: "policy", label: "Policies", color: "#71717A" },
+  { type: "challenge", label: "Challenges", color: "#FFE600" },
 ];
 
 export function KnowledgeGraph({
@@ -279,7 +279,7 @@ export function KnowledgeGraph({
           <Icon name="Network" className="h-4 w-4 text-gov-soft" />
         </div>
         <div className="flex-1">
-          <h3 className="text-sm font-semibold text-white">ESG Knowledge Graph</h3>
+          <h3 className="text-sm font-semibold text-fg">ESG Knowledge Graph</h3>
           <p className="text-xs text-slate-500">Interactive view of data relationships</p>
         </div>
         <span className="chip">
@@ -291,7 +291,7 @@ export function KnowledgeGraph({
       {/* Canvas */}
       <div
         ref={containerRef}
-        className="relative rounded-xl border border-white/[0.06] bg-ink-950/50 overflow-hidden"
+        className="relative rounded-xl border border-line/[0.06] bg-ink-950/50 overflow-hidden"
         style={{ height: 420 }}
       >
         <canvas
@@ -316,7 +316,7 @@ export function KnowledgeGraph({
           >
             <div className="flex items-center gap-2">
               <span className="h-2 w-2 rounded-full" style={{ background: hoveredNode.color }} />
-              <span className="font-semibold text-white">{hoveredNode.label}</span>
+              <span className="font-semibold text-fg">{hoveredNode.label}</span>
             </div>
             <div className="mt-1 text-slate-400 capitalize">{hoveredNode.type} · Score: {hoveredNode.value}</div>
           </motion.div>
@@ -325,7 +325,7 @@ export function KnowledgeGraph({
         {/* Legend */}
         <div className="absolute bottom-3 left-3 flex flex-wrap gap-2">
           {LEGEND.map((l) => (
-            <span key={l.type} className="flex items-center gap-1.5 rounded-md bg-ink-950/70 px-2 py-1 text-[10px] text-slate-400 backdrop-blur-sm border border-white/[0.06]">
+            <span key={l.type} className="flex items-center gap-1.5 rounded-md bg-ink-950/70 px-2 py-1 text-[10px] text-slate-400 backdrop-blur-sm border border-line/[0.06]">
               <span className="h-2 w-2 rounded-full" style={{ background: l.color }} />
               {l.label}
             </span>

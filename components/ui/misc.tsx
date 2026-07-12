@@ -13,9 +13,9 @@ const STATUS_COLORS: Record<string, string> = {
   achieved: "text-env border-env/30 bg-env/10",
   pass: "text-env border-env/30 bg-env/10",
   resolved: "text-env border-env/30 bg-env/10",
-  draft: "text-slate-400 border-white/15 bg-white/5",
-  archived: "text-slate-500 border-white/10 bg-white/5",
-  inactive: "text-slate-500 border-white/10 bg-white/5",
+  draft: "text-slate-400 border-line/15 bg-line/5",
+  archived: "text-slate-500 border-line/10 bg-line/5",
+  inactive: "text-slate-500 border-line/10 bg-line/5",
   pending: "text-gold border-gold/30 bg-gold/10",
   "under review": "text-gold border-gold/30 bg-gold/10",
   "in progress": "text-gold border-gold/30 bg-gold/10",
@@ -27,7 +27,7 @@ const STATUS_COLORS: Record<string, string> = {
   critical: "text-red-400 border-red-400/30 bg-red-400/10",
   high: "text-red-400 border-red-400/30 bg-red-400/10",
   medium: "text-gold border-gold/30 bg-gold/10",
-  low: "text-slate-400 border-white/15 bg-white/5",
+  low: "text-slate-400 border-line/15 bg-line/5",
 };
 
 const PULSING_STATUSES = new Set([
@@ -36,7 +36,7 @@ const PULSING_STATUSES = new Set([
 
 export function StatusPill({ status }: { status: string }) {
   const key = status.toLowerCase();
-  const cls = STATUS_COLORS[key] ?? "text-slate-300 border-white/15 bg-white/5";
+  const cls = STATUS_COLORS[key] ?? "text-slate-300 border-line/15 bg-line/5";
   const shouldPulse = PULSING_STATUSES.has(key);
   return (
     <span
@@ -60,7 +60,7 @@ export function StatusPill({ status }: { status: string }) {
 export function ProgressBar({
   value,
   max = 100,
-  accent = "#9CB84A",
+  accent = "#FFE600",
   className,
   showValue,
 }: {
@@ -73,7 +73,7 @@ export function ProgressBar({
   const pct = Math.min(100, Math.max(0, (value / max) * 100));
   return (
     <div className={cn("flex items-center gap-2", className)}>
-      <div className="h-2 flex-1 overflow-hidden rounded-full bg-white/[0.06]">
+      <div className="h-2 flex-1 overflow-hidden rounded-full bg-line/[0.06]">
         <div
           className="relative h-full rounded-full transition-all duration-1000 ease-out"
           style={{
@@ -113,8 +113,8 @@ export function EmptyState({
   action?: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-white/10 bg-white/[0.02] px-6 py-16 text-center">
-      <div className="mb-4 grid h-14 w-14 place-items-center rounded-2xl bg-white/5 animate-float">
+    <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-line/10 bg-line/[0.02] px-6 py-16 text-center">
+      <div className="mb-4 grid h-14 w-14 place-items-center rounded-2xl bg-line/5 animate-float">
         <Icon name={icon} className="h-6 w-6 text-slate-500" />
       </div>
       <h3 className="text-base font-semibold text-slate-200">{title}</h3>
@@ -145,11 +145,11 @@ export function SectionTitle({
           <div className="relative">
             <Icon name={icon} className="h-4 w-4 text-slate-400 relative z-10" />
             {/* Subtle glow behind icon */}
-            <div className="absolute inset-0 -m-1 rounded-full bg-white/5 blur-sm" />
+            <div className="absolute inset-0 -m-1 rounded-full bg-line/5 blur-sm" />
           </div>
         )}
         <div>
-          <h3 className="text-sm font-semibold text-white">{title}</h3>
+          <h3 className="text-sm font-semibold text-fg">{title}</h3>
           {subtitle && <p className="text-xs text-slate-500">{subtitle}</p>}
         </div>
       </div>

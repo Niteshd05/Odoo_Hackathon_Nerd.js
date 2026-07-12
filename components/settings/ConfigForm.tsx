@@ -18,9 +18,9 @@ type DeptScore = {
 };
 
 const PILLARS = [
-  { key: "wE" as const, label: "Environmental", color: "#9CB84A", icon: "Leaf" },
-  { key: "wS" as const, label: "Social", color: "#5BA894", icon: "HeartHandshake" },
-  { key: "wG" as const, label: "Governance", color: "#CB7A4E", icon: "Scale" },
+  { key: "wE" as const, label: "Environmental", color: "#FFE600", icon: "Leaf" },
+  { key: "wS" as const, label: "Social", color: "#A1A1AA", icon: "HeartHandshake" },
+  { key: "wG" as const, label: "Governance", color: "#71717A", icon: "Scale" },
 ];
 
 export function ConfigForm({
@@ -96,7 +96,7 @@ export function ConfigForm({
           subtitle="How much each pillar counts toward the department total. Normalized to 100%."
           icon="SlidersHorizontal"
           right={
-            <button onClick={reset} className="chip hover:border-white/20">
+            <button onClick={reset} className="chip hover:border-line/20">
               <Icon name="RotateCcw" className="h-3 w-3" /> Reset
             </button>
           }
@@ -151,7 +151,7 @@ export function ConfigForm({
           ))}
         </div>
 
-        <div className="mt-8 border-t border-white/5 pt-6">
+        <div className="mt-8 border-t border-line/5 pt-6">
           <SectionTitle title="Feature toggles" icon="ToggleRight" />
           <div className="space-y-2">
             <Toggle
@@ -245,7 +245,7 @@ function Toggle({
   return (
     <button
       onClick={() => onChange(!checked)}
-      className="flex w-full items-center justify-between rounded-xl border border-white/[0.06] bg-white/[0.02] px-4 py-3 text-left transition-all duration-300 hover:border-white/[0.12] hover:bg-white/[0.04]"
+      className="flex w-full items-center justify-between rounded-xl border border-line/[0.06] bg-line/[0.02] px-4 py-3 text-left transition-all duration-300 hover:border-line/[0.12] hover:bg-line/[0.04]"
     >
       <span>
         <span className="block text-sm font-medium text-slate-200">{label}</span>
@@ -254,7 +254,7 @@ function Toggle({
       <span
         className="relative h-6 w-11 shrink-0 rounded-full transition-all duration-300"
         style={{
-          background: checked ? "#9CB84A" : "rgba(255,255,255,0.1)",
+          background: checked ? "#FFE600" : "rgba(255,255,255,0.1)",
           boxShadow: checked ? "0 0 16px -4px rgba(52,211,153,0.5)" : "none",
         }}
       >

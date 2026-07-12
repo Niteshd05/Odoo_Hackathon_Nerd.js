@@ -22,17 +22,12 @@ export type SessionUser = {
  */
 export async function getCurrentUser(): Promise<SessionUser | null> {
   const uid = cookies().get(COOKIE)?.value;
+  if (!uid) return null;
 
-  const employee = uid
-    ? await prisma.employee.findUnique({
-        where: { id: uid },
-        include: { department: true },
-      })
-    : await prisma.employee.findFirst({
-        where: { role: "Admin" },
-        include: { department: true },
-        orderBy: { createdAt: "asc" },
-      });
+  const employee = await prisma.employee.findUnique({
+    where: { id: uid },
+    include: { department: true },
+  });
 
   if (!employee) return null;
 

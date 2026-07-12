@@ -20,7 +20,7 @@ export function BadgeCelebration({
       id: i,
       x: Math.random() * 100,
       delay: Math.random() * 0.6,
-      color: ["#9CB84A", "#5BA894", "#CB7A4E", "#E0A838", "#B08556", "#C6DA83", "#F1CB6E"][i % 7],
+      color: ["#FFE600", "#A1A1AA", "#71717A", "#FFE600", "#8A8A92", "#FFF17A", "#FFF17A"][i % 7],
       rotate: Math.random() * 720 - 360,
       size: Math.random() * 6 + 3,
       shape: i % 3, // 0: square, 1: circle, 2: rectangle
@@ -159,7 +159,7 @@ export function BadgeCelebration({
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="mt-5 text-2xl font-bold text-white"
+            className="mt-5 text-2xl font-bold text-fg"
           >
             {badge.name}
           </motion.h2>

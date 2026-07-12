@@ -18,6 +18,8 @@ export const NAV: NavSection[] = [
     items: [
       { label: "ESG Dashboard", href: "/", icon: "LayoutDashboard" },
       { label: "ESG Copilot", href: "/copilot", icon: "Sparkles", badge: "AI" },
+      { label: "What-if Simulator", href: "/simulator", icon: "FlaskConical" },
+      { label: "Activity Feed", href: "/activity", icon: "Activity" },
     ],
   },
   {
@@ -26,6 +28,7 @@ export const NAV: NavSection[] = [
       { label: "Carbon Dashboard", href: "/environmental", icon: "Leaf" },
       { label: "Operations", href: "/environmental/operations", icon: "Factory" },
       { label: "Carbon Ledger", href: "/environmental/carbon", icon: "Gauge" },
+      { label: "Carbon Forecast", href: "/environmental/forecast", icon: "TrendingUp" },
       { label: "Emission Factors", href: "/environmental/factors", icon: "Sigma" },
       { label: "Goals", href: "/environmental/goals", icon: "Target" },
     ],

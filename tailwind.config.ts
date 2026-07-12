@@ -1,7 +1,12 @@
 import type { Config } from "tailwindcss";
 
+// Colors are driven by CSS variables (see globals.css) so the same class names
+// work in both the dark (black) and light (paper) maximalist themes. Variables
+// are stored as "R G B" triplets so Tailwind's /opacity modifiers work.
+const v = (name: string) => `rgb(var(${name}) / <alpha-value>)`;
+
 const config: Config = {
-  darkMode: "class",
+  darkMode: ["class", '[data-theme="dark"]'],
   content: [
     "./app/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
@@ -10,105 +15,91 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // === Organic Earth: warm charcoal surface scale (browns, not blue-black) ===
+        // Surface scale (flips per theme)
         ink: {
-          950: "#12100A",
-          900: "#191509",
-          850: "#201B10",
-          800: "#292318",
-          700: "#362F21",
-          600: "#473E2C",
+          950: v("--bg"),
+          900: v("--surface-1"),
+          850: v("--surface-1"),
+          800: v("--surface-2"),
+          700: v("--surface-3"),
+          600: v("--surface-3"),
         },
-        // Warm "paper" text scale - overrides Tailwind's cool slate everywhere.
+        // Text/neutral ramp (flips per theme). Kept as `slate` so existing
+        // text-slate-* usage recolors automatically.
         slate: {
-          50: "#FBF8F1",
-          100: "#F3EEE1",
-          200: "#E9E0CE",
-          300: "#D6C9B0",
-          400: "#AC9E82",
-          500: "#8A7C63",
-          600: "#6B5E48",
-          700: "#4F4534",
-          800: "#372F23",
-          900: "#241E15",
-          950: "#161109",
+          50: v("--fg-strong"),
+          100: v("--fg"),
+          200: v("--fg"),
+          300: v("--fg-dim"),
+          400: v("--muted"),
+          500: v("--faint"),
+          600: v("--faint-2"),
+          700: v("--faint-2"),
+          800: v("--faint-2"),
+          900: v("--fg-strong"),
+          950: v("--fg-strong"),
         },
-        // === Pillar accents (earthy, tactile) ===
+        fg: v("--fg-strong"),
+        line: v("--line"),
+        sand: {
+          DEFAULT: v("--line"),
+          soft: v("--line"),
+        },
+        // Brand accent = acid yellow (both themes). env + gold both map to it.
         env: {
-          DEFAULT: "#9CB84A", // moss / olive
-          soft: "#C6DA83",
-          deep: "#5F7330",
-        },
-        social: {
-          DEFAULT: "#5BA894", // sage teal
-          soft: "#93CDBD",
-          deep: "#396E5E",
-        },
-        gov: {
-          DEFAULT: "#CB7A4E", // terracotta / clay
-          soft: "#E7A97C",
-          deep: "#9A5730",
+          DEFAULT: v("--accent"),
+          soft: v("--accent-soft"),
+          deep: v("--accent-deep"),
         },
         gold: {
-          DEFAULT: "#E0A838", // honey
-          soft: "#F1CB6E",
+          DEFAULT: v("--accent"),
+          soft: v("--accent-soft"),
         },
-        clay: {
-          DEFAULT: "#B08556",
-          soft: "#D9C09A",
+        accent: {
+          DEFAULT: v("--accent"),
+          ink: v("--accent-ink"),
         },
-        sand: {
-          DEFAULT: "#D9C9A3",
-          soft: "#E7DcC0",
+        // Secondary pillar tones (neutral, theme-aware)
+        social: {
+          DEFAULT: v("--pillar-2"),
+          soft: v("--pillar-2"),
+          deep: v("--pillar-2"),
         },
+        gov: {
+          DEFAULT: v("--pillar-3"),
+          soft: v("--pillar-3"),
+          deep: v("--pillar-3"),
+        },
+        clay: { DEFAULT: v("--pillar-3"), soft: v("--pillar-2") },
+        danger: v("--danger"),
       },
       fontFamily: {
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
-        display: ["var(--font-display)", "Georgia", "serif"],
+        display: ["var(--font-display)", "system-ui", "sans-serif"],
         mono: ["var(--font-mono)", "ui-monospace", "monospace"],
       },
-      boxShadow: {
-        glow: "0 0 44px -14px rgba(156, 184, 74, 0.4)",
-        "glow-social": "0 0 44px -14px rgba(91, 168, 148, 0.4)",
-        "glow-gov": "0 0 44px -14px rgba(203, 122, 78, 0.4)",
-        // Soft, warm, tactile card shadow.
-        card: "0 1px 0 0 rgba(255,247,230,0.05) inset, 0 24px 48px -30px rgba(0,0,0,0.75)",
-        lift: "0 20px 50px -24px rgba(0,0,0,0.8)",
+      fontSize: {
+        // Maximalist display sizes
+        mega: ["clamp(3rem, 8vw, 6rem)", { lineHeight: "0.9", letterSpacing: "-0.03em" }],
+        giant: ["clamp(2.2rem, 5vw, 3.75rem)", { lineHeight: "0.95", letterSpacing: "-0.02em" }],
       },
-      backgroundImage: {
-        "aurora-warm":
-          "linear-gradient(120deg, rgba(156,184,74,0.16), rgba(203,122,78,0.12) 45%, rgba(91,168,148,0.14) 85%)",
+      boxShadow: {
+        glow: "0 0 0 1px rgb(var(--accent) / 0.35), 0 12px 40px -14px rgb(var(--accent) / 0.4)",
+        "glow-social": "0 10px 40px -18px rgb(var(--pillar-2) / 0.5)",
+        "glow-gov": "0 10px 40px -18px rgb(var(--pillar-3) / 0.5)",
+        card: "0 1px 0 0 rgb(var(--line) / 0.06) inset, 0 24px 48px -30px rgb(0 0 0 / 0.6)",
+        hard: "4px 4px 0 0 rgb(var(--fg-strong) / 1)",
+        "hard-accent": "4px 4px 0 0 rgb(var(--accent) / 1)",
       },
       keyframes: {
-        "fade-up": {
-          "0%": { opacity: "0", transform: "translateY(10px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
-        },
-        "slide-up": {
-          "0%": { opacity: "0", transform: "translateY(18px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
-        },
-        "scale-in": {
-          "0%": { opacity: "0", transform: "scale(0.94)" },
-          "100%": { opacity: "1", transform: "scale(1)" },
-        },
+        "fade-up": { "0%": { opacity: "0", transform: "translateY(10px)" }, "100%": { opacity: "1", transform: "translateY(0)" } },
+        "slide-up": { "0%": { opacity: "0", transform: "translateY(18px)" }, "100%": { opacity: "1", transform: "translateY(0)" } },
+        "scale-in": { "0%": { opacity: "0", transform: "scale(0.94)" }, "100%": { opacity: "1", transform: "scale(1)" } },
         shimmer: { "100%": { transform: "translateX(100%)" } },
-        "pulse-ring": {
-          "0%": { transform: "scale(0.9)", opacity: "0.7" },
-          "80%,100%": { transform: "scale(1.5)", opacity: "0" },
-        },
-        float: {
-          "0%,100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-8px)" },
-        },
-        breathing: {
-          "0%,100%": { opacity: "0.55" },
-          "50%": { opacity: "1" },
-        },
-        "aurora-shift": {
-          "0%,100%": { transform: "translate(0,0) scale(1)" },
-          "50%": { transform: "translate(3%,-2%) scale(1.06)" },
-        },
+        "pulse-ring": { "0%": { transform: "scale(0.9)", opacity: "0.7" }, "80%,100%": { transform: "scale(1.5)", opacity: "0" } },
+        float: { "0%,100%": { transform: "translateY(0)" }, "50%": { transform: "translateY(-8px)" } },
+        breathing: { "0%,100%": { opacity: "0.5" }, "50%": { opacity: "1" } },
+        marquee: { "0%": { transform: "translateX(0)" }, "100%": { transform: "translateX(-50%)" } },
       },
       animation: {
         "fade-up": "fade-up 0.6s cubic-bezier(0.22,1,0.36,1) both",
@@ -118,7 +109,7 @@ const config: Config = {
         "pulse-ring": "pulse-ring 2s cubic-bezier(0.4,0,0.6,1) infinite",
         float: "float 7s ease-in-out infinite",
         breathing: "breathing 3s ease-in-out infinite",
-        "aurora-shift": "aurora-shift 18s ease-in-out infinite",
+        marquee: "marquee 30s linear infinite",
       },
     },
   },

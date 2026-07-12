@@ -15,12 +15,12 @@ export type ActivityItem = {
 };
 
 const TYPE_CONFIG: Record<string, { icon: string; color: string }> = {
-  carbon: { icon: "Factory", color: "#9CB84A" },
-  challenge: { icon: "Trophy", color: "#5BA894" },
-  badge: { icon: "Award", color: "#E0A838" },
-  config: { icon: "SlidersHorizontal", color: "#CB7A4E" },
-  audit: { icon: "ClipboardCheck", color: "#93CDBD" },
-  policy: { icon: "FileText", color: "#E7A97C" },
+  carbon: { icon: "Factory", color: "#FFE600" },
+  challenge: { icon: "Trophy", color: "#A1A1AA" },
+  badge: { icon: "Award", color: "#FFE600" },
+  config: { icon: "SlidersHorizontal", color: "#71717A" },
+  audit: { icon: "ClipboardCheck", color: "#C4C4CC" },
+  policy: { icon: "FileText", color: "#9A9AA2" },
 };
 
 const itemVariants = {
@@ -46,7 +46,7 @@ export function ActivityStream({ activities }: { activities: ActivityItem[] }) {
           <Icon name="Activity" className="h-4 w-4 text-social-soft" />
         </div>
         <div className="flex-1">
-          <h3 className="text-sm font-semibold text-white">Backend Activity Stream</h3>
+          <h3 className="text-sm font-semibold text-fg">Backend Activity Stream</h3>
           <p className="text-xs text-slate-500">Recent system events and actions</p>
         </div>
         <span className="chip">
@@ -70,12 +70,12 @@ export function ActivityStream({ activities }: { activities: ActivityItem[] }) {
                 variants={itemVariants}
                 initial="hidden"
                 animate="show"
-                className="group relative flex items-start gap-3 rounded-lg px-2 py-2.5 transition-all duration-300 hover:bg-white/[0.03]"
+                className="group relative flex items-start gap-3 rounded-lg px-2 py-2.5 transition-all duration-300 hover:bg-line/[0.03]"
               >
                 {/* Timeline dot */}
                 <div className="relative z-10 mt-0.5">
                   <div
-                    className="grid h-[28px] w-[28px] place-items-center rounded-lg border border-white/10 transition-all duration-300 group-hover:border-white/20"
+                    className="grid h-[28px] w-[28px] place-items-center rounded-lg border border-line/10 transition-all duration-300 group-hover:border-line/20"
                     style={{ background: `${config.color}15` }}
                   >
                     <Icon name={config.icon} className="h-3.5 w-3.5" style={{ color: config.color }} />
@@ -92,12 +92,12 @@ export function ActivityStream({ activities }: { activities: ActivityItem[] }) {
                 {/* Content */}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 text-sm">
-                    <span className="font-medium text-white truncate">{activity.title}</span>
+                    <span className="font-medium text-fg truncate">{activity.title}</span>
                   </div>
                   <p className="mt-0.5 text-xs text-slate-500 line-clamp-1">{activity.description}</p>
                   <div className="mt-1 flex items-center gap-2 text-[11px] text-slate-600">
                     <span
-                      className="inline-flex h-4 w-4 items-center justify-center rounded-full text-[8px] font-bold text-ink-950"
+                      className="inline-flex h-4 w-4 items-center justify-center rounded-full text-[8px] font-bold text-[#0a0a0a]"
                       style={{ background: activity.actorColor }}
                     >
                       {activity.actor[0]}

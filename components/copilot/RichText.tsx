@@ -17,7 +17,7 @@ function renderInline(text: string, keyPrefix: string): React.ReactNode[] {
     const boldSplit = part.split(/\*\*(.+?)\*\*/g);
     boldSplit.forEach((seg, j) => {
       if (j % 2 === 1) {
-        nodes.push(<strong key={`${keyPrefix}-b-${i}-${j}`} className="font-semibold text-white">{seg}</strong>);
+        nodes.push(<strong key={`${keyPrefix}-b-${i}-${j}`} className="font-semibold text-fg">{seg}</strong>);
       } else if (seg) {
         nodes.push(<span key={`${keyPrefix}-t-${i}-${j}`}>{seg}</span>);
       }
@@ -44,7 +44,7 @@ export function RichText({ text }: { text: string }) {
         const trimmed = line.trim();
         if (!trimmed) return null;
         if (trimmed.startsWith("# ")) {
-          return <h2 key={i} className="pt-1 text-lg font-bold text-white">{renderInline(trimmed.slice(2), `h${i}`)}</h2>;
+          return <h2 key={i} className="pt-1 text-lg font-bold text-fg">{renderInline(trimmed.slice(2), `h${i}`)}</h2>;
         }
         if (trimmed.startsWith("## ")) {
           return <h3 key={i} className="pt-1 text-sm font-semibold uppercase tracking-wide text-env-soft">{renderInline(trimmed.slice(3), `h${i}`)}</h3>;

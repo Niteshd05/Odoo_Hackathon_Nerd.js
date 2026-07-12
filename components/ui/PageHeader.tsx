@@ -8,7 +8,7 @@ export function PageHeader({
   title,
   description,
   icon,
-  accent = "#9CB84A",
+  accent = "#FFE600",
   actions,
 }: {
   eyebrow?: string;
@@ -31,7 +31,7 @@ export function PageHeader({
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.1, duration: 0.4, type: "spring", stiffness: 300, damping: 20 }}
-            className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl border border-white/10 relative overflow-hidden"
+            className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl border border-line/10 relative overflow-hidden"
             style={{
               background: `linear-gradient(135deg, ${accent}22, transparent)`,
             }}
@@ -59,7 +59,7 @@ export function PageHeader({
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
-            className="text-2xl font-bold tracking-tight text-white sm:text-[28px]"
+            className="text-2xl font-bold tracking-tight text-fg sm:text-[28px]"
           >
             {title}
           </motion.h1>
