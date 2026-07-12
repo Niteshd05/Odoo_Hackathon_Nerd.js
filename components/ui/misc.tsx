@@ -1,3 +1,5 @@
+"use client";
+
 import { Icon } from "./Icon";
 import { cn } from "@/lib/utils";
 
@@ -28,23 +30,33 @@ const STATUS_COLORS: Record<string, string> = {
   low: "text-slate-400 border-white/15 bg-white/5",
 };
 
+const PULSING_STATUSES = new Set([
+  "active", "pending", "in progress", "under review", "open", "critical", "high",
+]);
+
 export function StatusPill({ status }: { status: string }) {
   const key = status.toLowerCase();
   const cls = STATUS_COLORS[key] ?? "text-slate-300 border-white/15 bg-white/5";
+  const shouldPulse = PULSING_STATUSES.has(key);
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[11px] font-semibold",
+        "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[11px] font-semibold transition-all duration-300",
         cls,
       )}
     >
-      <span className="h-1.5 w-1.5 rounded-full bg-current opacity-70" />
+      <span
+        className={cn(
+          "h-1.5 w-1.5 rounded-full bg-current",
+          shouldPulse ? "animate-breathing" : "opacity-70",
+        )}
+      />
       {status}
     </span>
   );
 }
 
-/** Horizontal progress bar with a value/target semantic. */
+/** Horizontal progress bar with animated fill and travelling shine. */
 export function ProgressBar({
   value,
   max = 100,
@@ -61,15 +73,24 @@ export function ProgressBar({
   const pct = Math.min(100, Math.max(0, (value / max) * 100));
   return (
     <div className={cn("flex items-center gap-2", className)}>
-      <div className="h-2 flex-1 overflow-hidden rounded-full bg-white/8">
+      <div className="h-2 flex-1 overflow-hidden rounded-full bg-white/[0.06]">
         <div
-          className="h-full rounded-full transition-all duration-700"
+          className="relative h-full rounded-full transition-all duration-1000 ease-out"
           style={{
             width: `${pct}%`,
             background: `linear-gradient(90deg, ${accent}, ${accent}bb)`,
-            boxShadow: `0 0 12px ${accent}66`,
+            boxShadow: `0 0 16px ${accent}55, inset 0 1px 0 rgba(255,255,255,0.15)`,
           }}
-        />
+        >
+          {/* Travelling shine */}
+          <div
+            className="absolute top-0 h-full w-[40%] rounded-full opacity-30"
+            style={{
+              background: `linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent)`,
+              animation: "progress-shine 2.5s ease-in-out infinite",
+            }}
+          />
+        </div>
       </div>
       {showValue && (
         <span className="w-10 shrink-0 text-right text-xs font-medium text-slate-400">
@@ -93,7 +114,7 @@ export function EmptyState({
 }) {
   return (
     <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-white/10 bg-white/[0.02] px-6 py-16 text-center">
-      <div className="mb-4 grid h-14 w-14 place-items-center rounded-2xl bg-white/5">
+      <div className="mb-4 grid h-14 w-14 place-items-center rounded-2xl bg-white/5 animate-float">
         <Icon name={icon} className="h-6 w-6 text-slate-500" />
       </div>
       <h3 className="text-base font-semibold text-slate-200">{title}</h3>
@@ -120,7 +141,13 @@ export function SectionTitle({
   return (
     <div className="mb-4 flex items-center justify-between gap-3">
       <div className="flex items-center gap-2.5">
-        {icon && <Icon name={icon} className="h-4 w-4 text-slate-400" />}
+        {icon && (
+          <div className="relative">
+            <Icon name={icon} className="h-4 w-4 text-slate-400 relative z-10" />
+            {/* Subtle glow behind icon */}
+            <div className="absolute inset-0 -m-1 rounded-full bg-white/5 blur-sm" />
+          </div>
+        )}
         <div>
           <h3 className="text-sm font-semibold text-white">{title}</h3>
           {subtitle && <p className="text-xs text-slate-500">{subtitle}</p>}
