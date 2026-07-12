@@ -10,130 +10,115 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Surface scale for the dark glass UI
+        // === Organic Earth: warm charcoal surface scale (browns, not blue-black) ===
         ink: {
-          950: "#05070d",
-          900: "#0a0e1a",
-          850: "#0e1424",
-          800: "#131b2e",
-          700: "#1b2540",
-          600: "#26334f",
+          950: "#12100A",
+          900: "#191509",
+          850: "#201B10",
+          800: "#292318",
+          700: "#362F21",
+          600: "#473E2C",
         },
-        // ESG pillar accents
+        // Warm "paper" text scale - overrides Tailwind's cool slate everywhere.
+        slate: {
+          50: "#FBF8F1",
+          100: "#F3EEE1",
+          200: "#E9E0CE",
+          300: "#D6C9B0",
+          400: "#AC9E82",
+          500: "#8A7C63",
+          600: "#6B5E48",
+          700: "#4F4534",
+          800: "#372F23",
+          900: "#241E15",
+          950: "#161109",
+        },
+        // === Pillar accents (earthy, tactile) ===
         env: {
-          DEFAULT: "#34d399",
-          soft: "#6ee7b7",
-          deep: "#059669",
+          DEFAULT: "#9CB84A", // moss / olive
+          soft: "#C6DA83",
+          deep: "#5F7330",
         },
         social: {
-          DEFAULT: "#38bdf8",
-          soft: "#7dd3fc",
-          deep: "#0284c7",
+          DEFAULT: "#5BA894", // sage teal
+          soft: "#93CDBD",
+          deep: "#396E5E",
         },
         gov: {
-          DEFAULT: "#a78bfa",
-          soft: "#c4b5fd",
-          deep: "#7c3aed",
+          DEFAULT: "#CB7A4E", // terracotta / clay
+          soft: "#E7A97C",
+          deep: "#9A5730",
         },
         gold: {
-          DEFAULT: "#fbbf24",
-          soft: "#fcd34d",
+          DEFAULT: "#E0A838", // honey
+          soft: "#F1CB6E",
+        },
+        clay: {
+          DEFAULT: "#B08556",
+          soft: "#D9C09A",
+        },
+        sand: {
+          DEFAULT: "#D9C9A3",
+          soft: "#E7DcC0",
         },
       },
       fontFamily: {
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
+        display: ["var(--font-display)", "Georgia", "serif"],
         mono: ["var(--font-mono)", "ui-monospace", "monospace"],
       },
       boxShadow: {
-        glow: "0 0 40px -12px rgba(52, 211, 153, 0.35)",
-        "glow-lg": "0 0 60px -12px rgba(52, 211, 153, 0.45)",
-        "glow-social": "0 0 40px -12px rgba(56, 189, 248, 0.35)",
-        "glow-gov": "0 0 40px -12px rgba(167, 139, 250, 0.35)",
-        "glow-gold": "0 0 40px -12px rgba(251, 191, 36, 0.35)",
-        card: "0 1px 0 0 rgba(255,255,255,0.04) inset, 0 20px 40px -24px rgba(0,0,0,0.8)",
-        "card-hover": "0 1px 0 0 rgba(255,255,255,0.06) inset, 0 24px 56px -12px rgba(0,0,0,0.7), 0 0 80px -20px rgba(52,211,153,0.08)",
-        "inner-glow": "inset 0 0 40px 0 rgba(255,255,255,0.02)",
+        glow: "0 0 44px -14px rgba(156, 184, 74, 0.4)",
+        "glow-social": "0 0 44px -14px rgba(91, 168, 148, 0.4)",
+        "glow-gov": "0 0 44px -14px rgba(203, 122, 78, 0.4)",
+        // Soft, warm, tactile card shadow.
+        card: "0 1px 0 0 rgba(255,247,230,0.05) inset, 0 24px 48px -30px rgba(0,0,0,0.75)",
+        lift: "0 20px 50px -24px rgba(0,0,0,0.8)",
       },
       backgroundImage: {
-        "grid-fade":
-          "radial-gradient(circle at 50% 0%, rgba(52,211,153,0.08), transparent 60%)",
-        aurora:
-          "linear-gradient(120deg, rgba(52,211,153,0.15), rgba(56,189,248,0.12) 40%, rgba(167,139,250,0.15) 80%)",
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-      },
-      backdropBlur: {
-        "2xl": "32px",
-        "3xl": "48px",
+        "aurora-warm":
+          "linear-gradient(120deg, rgba(156,184,74,0.16), rgba(203,122,78,0.12) 45%, rgba(91,168,148,0.14) 85%)",
       },
       keyframes: {
         "fade-up": {
-          "0%": { opacity: "0", transform: "translateY(12px)" },
+          "0%": { opacity: "0", transform: "translateY(10px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
-        shimmer: {
-          "100%": { transform: "translateX(100%)" },
-        },
-        "pulse-ring": {
-          "0%": { transform: "scale(0.9)", opacity: "0.7" },
-          "80%,100%": { transform: "scale(1.4)", opacity: "0" },
-        },
-        float: {
-          "0%,100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-6px)" },
-        },
         "slide-up": {
-          "0%": { opacity: "0", transform: "translateY(20px)" },
+          "0%": { opacity: "0", transform: "translateY(18px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
         "scale-in": {
-          "0%": { opacity: "0", transform: "scale(0.92)" },
+          "0%": { opacity: "0", transform: "scale(0.94)" },
           "100%": { opacity: "1", transform: "scale(1)" },
         },
-        "glow-pulse": {
-          "0%,100%": { opacity: "0.2", transform: "scale(1)" },
-          "50%": { opacity: "0.45", transform: "scale(1.08)" },
+        shimmer: { "100%": { transform: "translateX(100%)" } },
+        "pulse-ring": {
+          "0%": { transform: "scale(0.9)", opacity: "0.7" },
+          "80%,100%": { transform: "scale(1.5)", opacity: "0" },
         },
-        "slide-in-right": {
-          "0%": { opacity: "0", transform: "translateX(20px)" },
-          "100%": { opacity: "1", transform: "translateX(0)" },
-        },
-        "slide-in-left": {
-          "0%": { opacity: "0", transform: "translateX(-20px)" },
-          "100%": { opacity: "1", transform: "translateX(0)" },
+        float: {
+          "0%,100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-8px)" },
         },
         breathing: {
-          "0%,100%": { opacity: "0.6" },
+          "0%,100%": { opacity: "0.55" },
           "50%": { opacity: "1" },
         },
-        "particle-float": {
-          "0%,100%": { transform: "translateY(0) translateX(0)", opacity: "0.3" },
-          "25%": { transform: "translateY(-14px) translateX(6px)", opacity: "0.6" },
-          "50%": { transform: "translateY(-8px) translateX(-5px)", opacity: "0.4" },
-          "75%": { transform: "translateY(-18px) translateX(4px)", opacity: "0.5" },
-        },
-        orbit: {
-          "0%": { transform: "rotate(0deg) translateX(var(--orbit-r, 40px)) rotate(0deg)" },
-          "100%": { transform: "rotate(360deg) translateX(var(--orbit-r, 40px)) rotate(-360deg)" },
-        },
-        "progress-shine": {
-          "0%": { left: "-40%" },
-          "100%": { left: "140%" },
+        "aurora-shift": {
+          "0%,100%": { transform: "translate(0,0) scale(1)" },
+          "50%": { transform: "translate(3%,-2%) scale(1.06)" },
         },
       },
       animation: {
-        "fade-up": "fade-up 0.6s ease-out both",
+        "fade-up": "fade-up 0.6s cubic-bezier(0.22,1,0.36,1) both",
+        "slide-up": "slide-up 0.7s cubic-bezier(0.22,1,0.36,1) both",
+        "scale-in": "scale-in 0.5s cubic-bezier(0.22,1,0.36,1) both",
         shimmer: "shimmer 1.8s infinite",
-        "pulse-ring": "pulse-ring 1.8s cubic-bezier(0.4,0,0.6,1) infinite",
-        float: "float 6s ease-in-out infinite",
-        "slide-up": "slide-up 0.5s ease-out both",
-        "scale-in": "scale-in 0.4s ease-out both",
-        "glow-pulse": "glow-pulse 3s ease-in-out infinite",
-        "slide-in-right": "slide-in-right 0.4s ease-out both",
-        "slide-in-left": "slide-in-left 0.4s ease-out both",
+        "pulse-ring": "pulse-ring 2s cubic-bezier(0.4,0,0.6,1) infinite",
+        float: "float 7s ease-in-out infinite",
         breathing: "breathing 3s ease-in-out infinite",
-        "particle-float": "particle-float 8s ease-in-out infinite",
-        orbit: "orbit 8s linear infinite",
-        "progress-shine": "progress-shine 2s ease-in-out infinite",
+        "aurora-shift": "aurora-shift 18s ease-in-out infinite",
       },
     },
   },

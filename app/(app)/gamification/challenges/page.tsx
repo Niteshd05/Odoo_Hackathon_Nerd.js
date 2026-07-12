@@ -35,15 +35,15 @@ export default async function ChallengesPage() {
         eyebrow="Gamification"
         title="Challenges"
         icon="Trophy"
-        accent="#38bdf8"
+        accent="#5BA894"
         description="Run the sustainability challenge lifecycle and approve participation to award XP."
       />
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard label="Total challenges" value={challenges.length} icon="Trophy" accent="#38bdf8" />
-        <StatCard label="Active" value={activeCount} icon="Flame" accent="#fbbf24" />
-        <StatCard label="Pending approvals" value={pending.length} icon="ClipboardCheck" accent="#a78bfa" />
-        <StatCard label="Completed runs" value={completedCount} icon="CheckCircle2" accent="#34d399" />
+        <StatCard label="Total challenges" value={challenges.length} icon="Trophy" accent="#5BA894" />
+        <StatCard label="Active" value={activeCount} icon="Flame" accent="#E0A838" />
+        <StatCard label="Pending approvals" value={pending.length} icon="ClipboardCheck" accent="#CB7A4E" />
+        <StatCard label="Completed runs" value={completedCount} icon="CheckCircle2" accent="#9CB84A" />
       </div>
 
       <ChallengeBoard

@@ -25,7 +25,7 @@ export default async function RewardsPage() {
         eyebrow="Gamification"
         title="Rewards"
         icon="Gift"
-        accent="#34d399"
+        accent="#9CB84A"
         description="Spend points earned from challenges. Redemption checks stock and deducts points."
         actions={
           user && (

@@ -40,7 +40,7 @@ const chartEntrance = {
 export function TrendArea({
   data,
   dataKey = "value",
-  color = "#34d399",
+  color = "#9CB84A",
   height = 240,
   unit = "",
 }: {
@@ -127,7 +127,7 @@ export function RankBar({
           />
           <Bar dataKey="value" radius={[0, 8, 8, 0]} barSize={18} animationDuration={1200} animationEasing="ease-out">
             {data.map((d, i) => (
-              <Cell key={i} fill={d.color ?? "#34d399"} />
+              <Cell key={i} fill={d.color ?? "#9CB84A"} />
             ))}
           </Bar>
         </BarChart>
@@ -159,7 +159,7 @@ export function GroupedBar({
           />
           <Bar dataKey="value" radius={[8, 8, 0, 0]} barSize={34} animationDuration={1200} animationEasing="ease-out">
             {data.map((d, i) => (
-              <Cell key={i} fill={d.color ?? "#34d399"} />
+              <Cell key={i} fill={d.color ?? "#9CB84A"} />
             ))}
           </Bar>
         </BarChart>

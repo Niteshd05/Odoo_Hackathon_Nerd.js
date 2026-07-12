@@ -20,7 +20,7 @@ export function BadgeCelebration({
       id: i,
       x: Math.random() * 100,
       delay: Math.random() * 0.6,
-      color: ["#34d399", "#38bdf8", "#a78bfa", "#fbbf24", "#f472b6", "#6ee7b7", "#fcd34d"][i % 7],
+      color: ["#9CB84A", "#5BA894", "#CB7A4E", "#E0A838", "#B08556", "#C6DA83", "#F1CB6E"][i % 7],
       rotate: Math.random() * 720 - 360,
       size: Math.random() * 6 + 3,
       shape: i % 3, // 0: square, 1: circle, 2: rectangle

@@ -29,7 +29,7 @@ export default async function GovernancePage() {
         eyebrow="Governance"
         title="Policies, Audits & Compliance"
         icon="Scale"
-        accent="#a78bfa"
+        accent="#CB7A4E"
         description="Governance posture across policies, audit outcomes, and open compliance issues."
       />
 
@@ -41,10 +41,10 @@ export default async function GovernancePage() {
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {[
-          { label: "Policies", value: policies.length, icon: "FileText", accent: "#a78bfa" },
-          { label: "Audit pass rate", value: `${passRate}%`, icon: "ShieldCheck", accent: "#34d399", hint: `${audits.length} audits` },
-          { label: "Open issues", value: openIssues, icon: "AlertTriangle", accent: "#fbbf24" },
-          { label: "Critical", value: critical, icon: "ShieldAlert", accent: critical ? "#f87171" : "#34d399" },
+          { label: "Policies", value: policies.length, icon: "FileText", accent: "#CB7A4E" },
+          { label: "Audit pass rate", value: `${passRate}%`, icon: "ShieldCheck", accent: "#9CB84A", hint: `${audits.length} audits` },
+          { label: "Open issues", value: openIssues, icon: "AlertTriangle", accent: "#E0A838" },
+          { label: "Critical", value: critical, icon: "ShieldAlert", accent: critical ? "#f87171" : "#9CB84A" },
         ].map((stat, i) => (
           <div key={stat.label} className={`delay-${(i + 1) * 100} animate-scale-in`} style={{ animationFillMode: "both" }}>
             <StatCard {...(stat as any)} />

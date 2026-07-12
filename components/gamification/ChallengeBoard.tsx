@@ -43,8 +43,8 @@ type Pending = {
 type Category = { id: string; name: string };
 
 const DIFF_COLOR: Record<string, string> = {
-  Easy: "#34d399",
-  Medium: "#fbbf24",
+  Easy: "#9CB84A",
+  Medium: "#E0A838",
   Hard: "#f87171",
 };
 const STATUS_ORDER = ["Under Review", "Active", "Draft", "Completed", "Archived"];
@@ -215,7 +215,7 @@ export function ChallengeBoard({
                       </p>
                     ) : null}
                     <div className="mt-2 max-w-xs">
-                      <ProgressBar value={p.progress} accent="#38bdf8" showValue />
+                      <ProgressBar value={p.progress} accent="#5BA894" showValue />
                     </div>
                   </div>
                   <div className="flex shrink-0 gap-2">
@@ -317,7 +317,7 @@ export function ChallengeBoard({
         title="New challenge"
         description="Created as a Draft. Activate it when you are ready to launch."
         icon="Trophy"
-        accent="#38bdf8"
+        accent="#5BA894"
       >
         <div className="space-y-4">
           <div>

@@ -15,12 +15,12 @@ export type ActivityItem = {
 };
 
 const TYPE_CONFIG: Record<string, { icon: string; color: string }> = {
-  carbon: { icon: "Factory", color: "#34d399" },
-  challenge: { icon: "Trophy", color: "#38bdf8" },
-  badge: { icon: "Award", color: "#fbbf24" },
-  config: { icon: "SlidersHorizontal", color: "#a78bfa" },
-  audit: { icon: "ClipboardCheck", color: "#7dd3fc" },
-  policy: { icon: "FileText", color: "#c4b5fd" },
+  carbon: { icon: "Factory", color: "#9CB84A" },
+  challenge: { icon: "Trophy", color: "#5BA894" },
+  badge: { icon: "Award", color: "#E0A838" },
+  config: { icon: "SlidersHorizontal", color: "#CB7A4E" },
+  audit: { icon: "ClipboardCheck", color: "#93CDBD" },
+  policy: { icon: "FileText", color: "#E7A97C" },
 };
 
 const itemVariants = {

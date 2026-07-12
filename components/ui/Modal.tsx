@@ -11,7 +11,7 @@ export function Modal({
   description,
   children,
   icon,
-  accent = "#34d399",
+  accent = "#9CB84A",
 }: {
   open: boolean;
   onClose: () => void;

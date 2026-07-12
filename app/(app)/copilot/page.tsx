@@ -27,7 +27,7 @@ export default async function CopilotPage() {
         eyebrow="AI"
         title="ESG Copilot"
         icon="Sparkles"
-        accent="#a78bfa"
+        accent="#CB7A4E"
         description="Grounded question-answering over your live ESG data, and an AI-written summary report."
         actions={
           <div

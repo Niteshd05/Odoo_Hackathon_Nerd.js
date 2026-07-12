@@ -52,8 +52,8 @@ export const TIER_STYLE: Record<
   string,
   { ring: string; text: string; glow: string }
 > = {
-  Bronze: { ring: "#b45309", text: "#fbbf24", glow: "#f59e0b55" },
+  Bronze: { ring: "#b45309", text: "#E0A838", glow: "#f59e0b55" },
   Silver: { ring: "#94a3b8", text: "#e2e8f0", glow: "#cbd5e155" },
   Gold: { ring: "#eab308", text: "#fde047", glow: "#facc1555" },
-  Platinum: { ring: "#a78bfa", text: "#c4b5fd", glow: "#a78bfa55" },
+  Platinum: { ring: "#CB7A4E", text: "#E7A97C", glow: "#CB7A4E55" },
 };

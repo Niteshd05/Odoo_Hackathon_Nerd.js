@@ -12,10 +12,10 @@ import { formatCO2, formatNumber, scoreColor } from "@/lib/utils";
 export const dynamic = "force-dynamic";
 
 const SOURCE_COLOR: Record<string, string> = {
-  Purchase: "#38bdf8",
-  Manufacturing: "#34d399",
-  Expense: "#fbbf24",
-  Fleet: "#a78bfa",
+  Purchase: "#5BA894",
+  Manufacturing: "#9CB84A",
+  Expense: "#E0A838",
+  Fleet: "#CB7A4E",
   Other: "#94a3b8",
 };
 
@@ -65,10 +65,10 @@ export default async function EnvironmentalDashboard() {
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {[
-          { label: "Total CO2", value: formatCO2(totalCO2), icon: "Cloud", accent: "#34d399", hint: "all sources" },
-          { label: "This month", value: formatCO2(thisMonth), icon: "CalendarDays", accent: "#38bdf8" },
-          { label: "Env score", value: org.environmental.toFixed(0), icon: "Gauge", accent: "#a78bfa", hint: "org average" },
-          { label: "Active goals", value: activeGoals, icon: "Target", accent: "#fbbf24", hint: anomalies ? `${anomalies} anomalies` : "no anomalies" },
+          { label: "Total CO2", value: formatCO2(totalCO2), icon: "Cloud", accent: "#9CB84A", hint: "all sources" },
+          { label: "This month", value: formatCO2(thisMonth), icon: "CalendarDays", accent: "#5BA894" },
+          { label: "Env score", value: org.environmental.toFixed(0), icon: "Gauge", accent: "#CB7A4E", hint: "org average" },
+          { label: "Active goals", value: activeGoals, icon: "Target", accent: "#E0A838", hint: anomalies ? `${anomalies} anomalies` : "no anomalies" },
         ].map((stat, i) => (
           <div key={stat.label} className={`delay-${(i + 1) * 100} animate-scale-in`} style={{ animationFillMode: "both" }}>
             <StatCard {...(stat as any)} />
@@ -80,7 +80,7 @@ export default async function EnvironmentalDashboard() {
         <div className="card lg:col-span-2">
           <SectionTitle title="Emissions by department" subtitle="Total CO2 (kg) per department" icon="BarChart3" />
           <GroupedBar
-            data={byDept.map((d) => ({ label: d.code, value: d.value, color: "#34d399" }))}
+            data={byDept.map((d) => ({ label: d.code, value: d.value, color: "#9CB84A" }))}
             unit=" kg"
           />
         </div>

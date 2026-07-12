@@ -72,7 +72,7 @@ export function GoalManager({ goals, departments }: { goals: Goal[]; departments
           {goals.map((g) => {
             const pct = Math.min(100, (g.actual / g.targetValue) * 100);
             const over = g.actual > g.targetValue;
-            const accent = over ? "#f87171" : "#34d399";
+            const accent = over ? "#f87171" : "#9CB84A";
             return (
               <div key={g.id} className="card glass-hover group">
                 <div className="flex items-start justify-between">

@@ -7,7 +7,7 @@ import { cn, formatNumber } from "@/lib/utils";
 export const dynamic = "force-dynamic";
 
 const PODIUM = [
-  { color: "#fbbf24", icon: "Crown", label: "1st", h: "h-28" },
+  { color: "#E0A838", icon: "Crown", label: "1st", h: "h-28" },
   { color: "#cbd5e1", icon: "Medal", label: "2nd", h: "h-20" },
   { color: "#f59e0b", icon: "Medal", label: "3rd", h: "h-16" },
 ];
@@ -32,7 +32,7 @@ export default async function LeaderboardPage() {
         eyebrow="Gamification"
         title="Leaderboard"
         icon="Medal"
-        accent="#fbbf24"
+        accent="#E0A838"
         description="Employees ranked by lifetime XP earned from sustainability challenges."
       />
 

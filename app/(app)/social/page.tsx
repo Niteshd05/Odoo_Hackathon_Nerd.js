@@ -9,11 +9,11 @@ import { shortDate } from "@/lib/utils";
 export const dynamic = "force-dynamic";
 
 const CAT_COLOR: Record<string, string> = {
-  Environment: "#34d399",
-  Education: "#38bdf8",
-  Health: "#f472b6",
-  Community: "#fbbf24",
-  Diversity: "#a78bfa",
+  Environment: "#9CB84A",
+  Education: "#5BA894",
+  Health: "#B08556",
+  Community: "#E0A838",
+  Diversity: "#CB7A4E",
 };
 
 export default async function SocialPage() {
@@ -42,7 +42,7 @@ export default async function SocialPage() {
         eyebrow="Social"
         title="CSR & Community"
         icon="HeartHandshake"
-        accent="#38bdf8"
+        accent="#5BA894"
         description="Corporate social responsibility activity across the organization."
       />
 
@@ -54,10 +54,10 @@ export default async function SocialPage() {
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard label="CSR activities" value={activities.length} icon="Sprout" accent="#34d399" />
-        <StatCard label="Volunteer hours" value={Math.round(hours._sum.hours ?? 0)} icon="Clock" accent="#38bdf8" />
-        <StatCard label="Participations" value={participationCount} icon="Users" accent="#a78bfa" />
-        <StatCard label="Categories" value={donutData.length} icon="Tags" accent="#fbbf24" />
+        <StatCard label="CSR activities" value={activities.length} icon="Sprout" accent="#9CB84A" />
+        <StatCard label="Volunteer hours" value={Math.round(hours._sum.hours ?? 0)} icon="Clock" accent="#5BA894" />
+        <StatCard label="Participations" value={participationCount} icon="Users" accent="#CB7A4E" />
+        <StatCard label="Categories" value={donutData.length} icon="Tags" accent="#E0A838" />
       </div>
 
       <div className="grid gap-6 lg:grid-cols-3">

@@ -60,7 +60,7 @@ export function StatusPill({ status }: { status: string }) {
 export function ProgressBar({
   value,
   max = 100,
-  accent = "#34d399",
+  accent = "#9CB84A",
   className,
   showValue,
 }: {

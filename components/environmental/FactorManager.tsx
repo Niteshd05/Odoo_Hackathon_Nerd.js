@@ -25,10 +25,10 @@ type Factor = {
 
 const TYPES = ["Purchase", "Manufacturing", "Expense", "Fleet"];
 const TYPE_COLOR: Record<string, string> = {
-  Purchase: "#38bdf8",
-  Manufacturing: "#34d399",
-  Expense: "#fbbf24",
-  Fleet: "#a78bfa",
+  Purchase: "#5BA894",
+  Manufacturing: "#9CB84A",
+  Expense: "#E0A838",
+  Fleet: "#CB7A4E",
 };
 
 export function FactorManager({ factors }: { factors: Factor[] }) {

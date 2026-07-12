@@ -18,9 +18,9 @@ type DeptScore = {
 };
 
 const PILLARS = [
-  { key: "wE" as const, label: "Environmental", color: "#34d399", icon: "Leaf" },
-  { key: "wS" as const, label: "Social", color: "#38bdf8", icon: "HeartHandshake" },
-  { key: "wG" as const, label: "Governance", color: "#a78bfa", icon: "Scale" },
+  { key: "wE" as const, label: "Environmental", color: "#9CB84A", icon: "Leaf" },
+  { key: "wS" as const, label: "Social", color: "#5BA894", icon: "HeartHandshake" },
+  { key: "wG" as const, label: "Governance", color: "#CB7A4E", icon: "Scale" },
 ];
 
 export function ConfigForm({
@@ -254,7 +254,7 @@ function Toggle({
       <span
         className="relative h-6 w-11 shrink-0 rounded-full transition-all duration-300"
         style={{
-          background: checked ? "#34d399" : "rgba(255,255,255,0.1)",
+          background: checked ? "#9CB84A" : "rgba(255,255,255,0.1)",
           boxShadow: checked ? "0 0 16px -4px rgba(52,211,153,0.5)" : "none",
         }}
       >

@@ -34,10 +34,10 @@ const TYPE_CONFIG: Record<string, { shape: string; icon: string }> = {
 };
 
 const LEGEND = [
-  { type: "department", label: "Departments", color: "#34d399" },
-  { type: "factor", label: "Emission Factors", color: "#38bdf8" },
-  { type: "policy", label: "Policies", color: "#a78bfa" },
-  { type: "challenge", label: "Challenges", color: "#fbbf24" },
+  { type: "department", label: "Departments", color: "#9CB84A" },
+  { type: "factor", label: "Emission Factors", color: "#5BA894" },
+  { type: "policy", label: "Policies", color: "#CB7A4E" },
+  { type: "challenge", label: "Challenges", color: "#E0A838" },
 ];
 
 export function KnowledgeGraph({

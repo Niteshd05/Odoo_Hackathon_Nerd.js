@@ -61,9 +61,9 @@ export default async function DashboardPage() {
     await getDashboardData();
 
   const pillarDonut = [
-    { label: "Environmental", value: org.environmental, color: "#34d399" },
-    { label: "Social", value: org.social, color: "#38bdf8" },
-    { label: "Governance", value: org.governance, color: "#a78bfa" },
+    { label: "Environmental", value: org.environmental, color: "#9CB84A" },
+    { label: "Social", value: org.social, color: "#5BA894" },
+    { label: "Governance", value: org.governance, color: "#CB7A4E" },
   ];
   const deptRank = org.departments.map((d) => ({
     label: d.code,
@@ -130,10 +130,10 @@ export default async function DashboardPage() {
         </div>
 
         <div className="grid grid-cols-2 gap-4 lg:col-span-1">
-          <StatCard label="Environmental" value={org.environmental.toFixed(0)} icon="Leaf" accent="#34d399" hint={scoreGrade(org.environmental).label} />
-          <StatCard label="Social" value={org.social.toFixed(0)} icon="HeartHandshake" accent="#38bdf8" hint={scoreGrade(org.social).label} />
-          <StatCard label="Governance" value={org.governance.toFixed(0)} icon="Scale" accent="#a78bfa" hint={scoreGrade(org.governance).label} />
-          <StatCard label="Total CO2" value={formatCO2(org.totalCO2)} icon="Factory" accent="#fbbf24" hint="all sources" />
+          <StatCard label="Environmental" value={org.environmental.toFixed(0)} icon="Leaf" accent="#9CB84A" hint={scoreGrade(org.environmental).label} />
+          <StatCard label="Social" value={org.social.toFixed(0)} icon="HeartHandshake" accent="#5BA894" hint={scoreGrade(org.social).label} />
+          <StatCard label="Governance" value={org.governance.toFixed(0)} icon="Scale" accent="#CB7A4E" hint={scoreGrade(org.governance).label} />
+          <StatCard label="Total CO2" value={formatCO2(org.totalCO2)} icon="Factory" accent="#E0A838" hint="all sources" />
         </div>
       </div>
 
@@ -161,10 +161,10 @@ export default async function DashboardPage() {
 
       {/* Quick actions row */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <QuickAction href="/gamification/challenges" icon="Trophy" accent="#38bdf8" title="Approvals waiting" value={`${pendingApprovals} pending`} />
-        <QuickAction href="/gamification/challenges" icon="Zap" accent="#fbbf24" title="Active challenges" value={`${activeChallenges} running`} />
-        <QuickAction href="/environmental" icon="Leaf" accent="#34d399" title="Carbon dashboard" value="Live tracking" />
-        <QuickAction href="/copilot" icon="Sparkles" accent="#a78bfa" title="ESG Copilot" value="Ask anything" />
+        <QuickAction href="/gamification/challenges" icon="Trophy" accent="#5BA894" title="Approvals waiting" value={`${pendingApprovals} pending`} />
+        <QuickAction href="/gamification/challenges" icon="Zap" accent="#E0A838" title="Active challenges" value={`${activeChallenges} running`} />
+        <QuickAction href="/environmental" icon="Leaf" accent="#9CB84A" title="Carbon dashboard" value="Live tracking" />
+        <QuickAction href="/copilot" icon="Sparkles" accent="#CB7A4E" title="ESG Copilot" value="Ask anything" />
       </div>
 
       {/* Department table */}

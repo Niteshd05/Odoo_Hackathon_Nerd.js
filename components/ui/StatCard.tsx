@@ -9,7 +9,7 @@ export function StatCard({
   value,
   unit,
   icon,
-  accent = "#34d399",
+  accent = "#9CB84A",
   delta,
   hint,
 }: {

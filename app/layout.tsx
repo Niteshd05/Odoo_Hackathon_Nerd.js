@@ -1,12 +1,22 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Instrument_Sans, Fraunces, JetBrains_Mono } from "next/font/google";
 import { Toaster } from "sonner";
 import "./globals.css";
 
-const inter = Inter({
+// Instrument Sans (humanist body) + Fraunces (characterful serif for display
+// numerals) gives the app an editorial, hand-crafted feel - not the default
+// Inter-on-dark look.
+const sans = Instrument_Sans({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
+});
+
+const display = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-display",
+  display: "swap",
+  axes: ["opsz", "SOFT"],
 });
 
 const mono = JetBrains_Mono({
@@ -27,7 +37,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${mono.variable} dark`}>
+    <html
+      lang="en"
+      className={`${sans.variable} ${display.variable} ${mono.variable} dark`}
+    >
       <body className="font-sans">
         {children}
         <Toaster
@@ -35,10 +48,10 @@ export default function RootLayout({
           position="bottom-right"
           toastOptions={{
             style: {
-              background: "rgba(14,20,36,0.9)",
-              border: "1px solid rgba(255,255,255,0.1)",
+              background: "rgba(32,27,16,0.92)",
+              border: "1px solid rgba(217,201,163,0.14)",
               backdropFilter: "blur(12px)",
-              color: "#e2e8f0",
+              color: "#E9E0CE",
             },
           }}
         />

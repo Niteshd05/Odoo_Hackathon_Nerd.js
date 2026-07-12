@@ -25,7 +25,7 @@ export default async function BadgesPage() {
         eyebrow="Gamification"
         title="Badges"
         icon="Award"
-        accent="#fbbf24"
+        accent="#E0A838"
         description="Auto-awarded the moment an employee meets the unlock rule. Rarer badges sit first."
       />
 
