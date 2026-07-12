@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Modal } from "@/components/ui/Modal";
 import { Icon } from "@/components/ui/Icon";
 import { StatusPill, ProgressBar, EmptyState } from "@/components/ui/misc";
@@ -48,6 +48,25 @@ const DIFF_COLOR: Record<string, string> = {
   Hard: "#f87171",
 };
 const STATUS_ORDER = ["Under Review", "Active", "Draft", "Completed", "Archived"];
+
+const cardVariants = {
+  hidden: { opacity: 0, scale: 0.92, y: 12 },
+  show: (i: number) => ({
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    transition: { delay: i * 0.06, duration: 0.4, ease: [0.22, 1, 0.36, 1] },
+  }),
+};
+
+const approvalVariants = {
+  hidden: { opacity: 0, x: 24 },
+  show: (i: number) => ({
+    opacity: 1,
+    x: 0,
+    transition: { delay: i * 0.08, duration: 0.4, ease: [0.22, 1, 0.36, 1] },
+  }),
+};
 
 export function ChallengeBoard({
   challenges,
@@ -129,10 +148,15 @@ export function ChallengeBoard({
     <>
       {canManage && (
         <div className="mb-5 flex justify-end">
-          <button onClick={() => setCreateOpen(true)} className="btn-primary">
+          <motion.button
+            onClick={() => setCreateOpen(true)}
+            className="btn-primary"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+          >
             <Icon name="Plus" className="h-4 w-4" />
             New challenge
-          </button>
+          </motion.button>
         </div>
       )}
 
@@ -156,14 +180,18 @@ export function ChallengeBoard({
             <EmptyState icon="CheckCheck" title="All caught up" description="No participations waiting for review." />
           ) : (
             <div className="space-y-2.5">
-              {pending.map((p) => (
+              {pending.map((p, i) => (
                 <motion.div
                   key={p.id}
+                  custom={i}
+                  variants={approvalVariants}
+                  initial="hidden"
+                  animate="show"
                   layout
-                  className="flex flex-col gap-3 rounded-xl border border-white/8 bg-white/[0.02] p-3.5 sm:flex-row sm:items-center"
+                  className="flex flex-col gap-3 rounded-xl border border-white/[0.06] bg-white/[0.02] p-3.5 transition-all duration-300 hover:border-white/[0.1] hover:bg-white/[0.03] sm:flex-row sm:items-center"
                 >
                   <span
-                    className="grid h-9 w-9 shrink-0 place-items-center rounded-full text-[11px] font-bold text-ink-950"
+                    className="grid h-9 w-9 shrink-0 place-items-center rounded-full text-[11px] font-bold text-ink-950 ring-1 ring-white/10"
                     style={{ background: p.employeeColor }}
                   >
                     {p.employeeName.split(" ").map((x) => x[0]).slice(0, 2).join("")}
@@ -191,14 +219,26 @@ export function ChallengeBoard({
                     </div>
                   </div>
                   <div className="flex shrink-0 gap-2">
-                    <button onClick={() => reject(p.id)} disabled={busy} className="btn-ghost btn-sm">
+                    <motion.button
+                      onClick={() => reject(p.id)}
+                      disabled={busy}
+                      className="btn-ghost btn-sm"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
                       <Icon name="X" className="h-3.5 w-3.5" />
                       Reject
-                    </button>
-                    <button onClick={() => approve(p.id)} disabled={busy} className="btn-primary btn-sm">
+                    </motion.button>
+                    <motion.button
+                      onClick={() => approve(p.id)}
+                      disabled={busy}
+                      className="btn-primary btn-sm"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
                       <Icon name="Check" className="h-3.5 w-3.5" />
                       Approve
-                    </button>
+                    </motion.button>
                   </div>
                 </motion.div>
               ))}
@@ -209,8 +249,17 @@ export function ChallengeBoard({
 
       {/* Challenge grid */}
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {sorted.map((c) => (
-          <div key={c.id} className="card glass-hover flex flex-col">
+        {sorted.map((c, i) => (
+          <motion.div
+            key={c.id}
+            custom={i}
+            variants={cardVariants}
+            initial="hidden"
+            animate="show"
+            whileHover={{ y: -4 }}
+            transition={{ duration: 0.3 }}
+            className="card glass-hover flex flex-col"
+          >
             <div className="flex items-start justify-between gap-2">
               <StatusPill status={c.status} />
               <span
@@ -249,7 +298,7 @@ export function ChallengeBoard({
                     key={to}
                     onClick={() => move(c.id, to)}
                     disabled={busy}
-                    className="rounded-lg border border-white/10 bg-white/5 px-2.5 py-1 text-xs text-slate-300 transition hover:border-white/20 hover:text-white"
+                    className="rounded-lg border border-white/10 bg-white/5 px-2.5 py-1 text-xs text-slate-300 transition-all duration-300 hover:border-white/20 hover:bg-white/10 hover:text-white"
                   >
                     <Icon name="ArrowRight" className="mr-1 inline h-3 w-3" />
                     {to}
@@ -257,7 +306,7 @@ export function ChallengeBoard({
                 ))}
               </div>
             )}
-          </div>
+          </motion.div>
         ))}
       </div>
 

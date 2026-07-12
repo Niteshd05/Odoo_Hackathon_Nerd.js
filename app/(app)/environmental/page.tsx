@@ -64,10 +64,16 @@ export default async function EnvironmentalDashboard() {
       />
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard label="Total CO2" value={formatCO2(totalCO2)} icon="Cloud" accent="#34d399" hint="all sources" />
-        <StatCard label="This month" value={formatCO2(thisMonth)} icon="CalendarDays" accent="#38bdf8" />
-        <StatCard label="Env score" value={org.environmental.toFixed(0)} icon="Gauge" accent="#a78bfa" hint="org average" />
-        <StatCard label="Active goals" value={activeGoals} icon="Target" accent="#fbbf24" hint={anomalies ? `${anomalies} anomalies` : "no anomalies"} />
+        {[
+          { label: "Total CO2", value: formatCO2(totalCO2), icon: "Cloud", accent: "#34d399", hint: "all sources" },
+          { label: "This month", value: formatCO2(thisMonth), icon: "CalendarDays", accent: "#38bdf8" },
+          { label: "Env score", value: org.environmental.toFixed(0), icon: "Gauge", accent: "#a78bfa", hint: "org average" },
+          { label: "Active goals", value: activeGoals, icon: "Target", accent: "#fbbf24", hint: anomalies ? `${anomalies} anomalies` : "no anomalies" },
+        ].map((stat, i) => (
+          <div key={stat.label} className={`delay-${(i + 1) * 100} animate-scale-in`} style={{ animationFillMode: "both" }}>
+            <StatCard {...(stat as any)} />
+          </div>
+        ))}
       </div>
 
       <div className="grid gap-6 lg:grid-cols-3">

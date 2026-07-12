@@ -74,16 +74,9 @@ export default async function DashboardPage() {
   return (
     <div className="animate-fade-up space-y-6">
       <PageHeader
-        eyebrow="Organization"
-        title="ESG Dashboard"
+        title="EcoSphere Dashboard"
+        description="Your live ESG performance overview and pending action items."
         icon="LayoutDashboard"
-        description="One number, computed live from operational data across all departments."
-        actions={
-          <Link href="/copilot" className="btn-primary">
-            <Icon name="Sparkles" className="h-4 w-4" />
-            Ask the Copilot
-          </Link>
-        }
       />
 
       {/* Anomaly alert */}

@@ -40,18 +40,24 @@ export default async function GovernancePage() {
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard label="Policies" value={policies.length} icon="FileText" accent="#a78bfa" />
-        <StatCard label="Audit pass rate" value={`${passRate}%`} icon="ShieldCheck" accent="#34d399" hint={`${audits.length} audits`} />
-        <StatCard label="Open issues" value={openIssues} icon="AlertTriangle" accent="#fbbf24" />
-        <StatCard label="Critical" value={critical} icon="ShieldAlert" accent={critical ? "#f87171" : "#34d399"} />
+        {[
+          { label: "Policies", value: policies.length, icon: "FileText", accent: "#a78bfa" },
+          { label: "Audit pass rate", value: `${passRate}%`, icon: "ShieldCheck", accent: "#34d399", hint: `${audits.length} audits` },
+          { label: "Open issues", value: openIssues, icon: "AlertTriangle", accent: "#fbbf24" },
+          { label: "Critical", value: critical, icon: "ShieldAlert", accent: critical ? "#f87171" : "#34d399" },
+        ].map((stat, i) => (
+          <div key={stat.label} className={`delay-${(i + 1) * 100} animate-scale-in`} style={{ animationFillMode: "both" }}>
+            <StatCard {...(stat as any)} />
+          </div>
+        ))}
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
-        <div className="card">
+        <div className="card delay-500 animate-slide-up" style={{ animationFillMode: "both" }}>
           <SectionTitle title="Policies" subtitle="Published governance policies" icon="FileText" />
           <div className="space-y-2.5">
-            {policies.map((p) => (
-              <div key={p.id} className="rounded-xl border border-white/8 bg-white/[0.02] p-3.5">
+            {policies.map((p, i) => (
+              <div key={p.id} className="rounded-xl border border-white/8 bg-white/[0.02] p-3.5 transition-all hover:bg-white/[0.04]">
                 <div className="flex items-center justify-between gap-2">
                   <span className="font-medium text-white">{p.title}</span>
                   <StatusPill status={p.status} />

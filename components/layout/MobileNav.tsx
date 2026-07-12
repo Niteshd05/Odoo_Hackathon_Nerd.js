@@ -8,16 +8,27 @@ import { Icon } from "@/components/ui/Icon";
 import { visibleNav } from "@/lib/nav";
 import { cn } from "@/lib/utils";
 
+const itemVariants = {
+  hidden: { opacity: 0, x: -16 },
+  show: (i: number) => ({
+    opacity: 1,
+    x: 0,
+    transition: { delay: i * 0.04, duration: 0.3, ease: [0.22, 1, 0.36, 1] },
+  }),
+};
+
 export function MobileNav({ role }: { role: string }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const sections = visibleNav(role);
 
+  let itemIndex = 0;
+
   return (
     <div className="border-b border-white/5 px-4 py-3 lg:hidden">
       <button
         onClick={() => setOpen(true)}
-        className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-slate-200"
+        className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-slate-200 transition-all duration-300 hover:border-white/20 hover:bg-white/10"
       >
         <Icon name="Menu" className="h-4 w-4" />
         Menu
@@ -29,7 +40,7 @@ export function MobileNav({ role }: { role: string }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-ink-950/80 backdrop-blur-sm"
+            className="fixed inset-0 z-50 bg-ink-950/70 backdrop-blur-md"
             onClick={() => setOpen(false)}
           >
             <motion.div
@@ -37,12 +48,12 @@ export function MobileNav({ role }: { role: string }) {
               animate={{ x: 0 }}
               exit={{ x: -320 }}
               transition={{ type: "spring", stiffness: 400, damping: 40 }}
-              className="h-full w-72 overflow-y-auto border-r border-white/10 bg-ink-900 p-4"
+              className="h-full w-72 overflow-y-auto border-r border-white/[0.08] bg-ink-900/90 backdrop-blur-2xl p-4"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="mb-4 flex items-center justify-between">
                 <span className="text-lg font-bold text-white">EcoSphere</span>
-                <button onClick={() => setOpen(false)}>
+                <button onClick={() => setOpen(false)} className="rounded-lg p-1 transition hover:bg-white/10">
                   <Icon name="X" className="h-5 w-5 text-slate-400" />
                 </button>
               </div>
@@ -56,21 +67,29 @@ export function MobileNav({ role }: { role: string }) {
                       item.href === "/"
                         ? pathname === "/"
                         : pathname.startsWith(item.href);
+                    const currentIndex = itemIndex++;
                     return (
-                      <Link
+                      <motion.div
                         key={item.href}
-                        href={item.href}
-                        onClick={() => setOpen(false)}
-                        className={cn(
-                          "flex items-center gap-3 rounded-lg px-2 py-2 text-sm",
-                          active
-                            ? "bg-white/10 text-white"
-                            : "text-slate-400",
-                        )}
+                        custom={currentIndex}
+                        variants={itemVariants}
+                        initial="hidden"
+                        animate="show"
                       >
-                        <Icon name={item.icon} className="h-4 w-4" />
-                        {item.label}
-                      </Link>
+                        <Link
+                          href={item.href}
+                          onClick={() => setOpen(false)}
+                          className={cn(
+                            "flex items-center gap-3 rounded-lg px-2 py-2 text-sm transition-all duration-200",
+                            active
+                              ? "bg-white/10 text-white"
+                              : "text-slate-400 hover:bg-white/5 hover:text-slate-200",
+                          )}
+                        >
+                          <Icon name={item.icon} className={cn("h-4 w-4", active && "text-env")} />
+                          {item.label}
+                        </Link>
+                      </motion.div>
                     );
                   })}
                 </div>

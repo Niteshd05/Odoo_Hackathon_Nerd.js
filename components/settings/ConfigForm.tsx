@@ -80,11 +80,17 @@ export function ConfigForm({
 
   const reset = () => setW({ wE: 0.4, wS: 0.3, wG: 0.3 });
   const grade = scoreGrade(preview);
+  const previewColor = scoreColor(preview);
 
   return (
     <div className="grid gap-6 lg:grid-cols-3">
       {/* Weights */}
-      <div className="card lg:col-span-2">
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        className="card lg:col-span-2"
+      >
         <SectionTitle
           title="Pillar weights"
           subtitle="How much each pillar counts toward the department total. Normalized to 100%."
@@ -95,33 +101,57 @@ export function ConfigForm({
             </button>
           }
         />
-        <div className="space-y-6">
-          {PILLARS.map((p) => (
-            <div key={p.key}>
-              <div className="mb-2 flex items-center justify-between">
+        <div className="space-y-7">
+          {PILLARS.map((p, i) => (
+            <motion.div
+              key={p.key}
+              initial={{ opacity: 0, x: -16 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: i * 0.1, duration: 0.4 }}
+            >
+              <div className="mb-2.5 flex items-center justify-between">
                 <span className="flex items-center gap-2 text-sm text-slate-200">
                   <Icon name={p.icon} className="h-4 w-4" style={{ color: p.color }} />
                   {p.label}
                 </span>
-                <span className="text-sm font-bold" style={{ color: p.color }}>
-                  {pct(w[p.key])}%
-                </span>
+                <div className="flex items-center gap-2">
+                  <motion.span
+                    key={pct(w[p.key])}
+                    initial={{ scale: 1.2, opacity: 0.5 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    className="text-sm font-bold"
+                    style={{ color: p.color }}
+                  >
+                    {pct(w[p.key])}%
+                  </motion.span>
+                </div>
               </div>
-              <input
-                type="range"
-                min={0}
-                max={1}
-                step={0.05}
-                value={w[p.key]}
-                onChange={(e) => setW({ ...w, [p.key]: Number(e.target.value) })}
-                className="w-full cursor-pointer accent-current"
-                style={{ accentColor: p.color }}
-              />
-            </div>
+              {/* Track with gradient fill visualization */}
+              <div className="relative">
+                <div
+                  className="absolute top-1/2 left-0 h-1.5 -translate-y-1/2 rounded-full transition-all duration-200"
+                  style={{
+                    width: `${pct(w[p.key])}%`,
+                    background: `linear-gradient(90deg, ${p.color}88, ${p.color})`,
+                    boxShadow: `0 0 12px ${p.color}44`,
+                  }}
+                />
+                <input
+                  type="range"
+                  min={0}
+                  max={1}
+                  step={0.05}
+                  value={w[p.key]}
+                  onChange={(e) => setW({ ...w, [p.key]: Number(e.target.value) })}
+                  className="relative z-10 w-full cursor-pointer"
+                  style={{ color: p.color }}
+                />
+              </div>
+            </motion.div>
           ))}
         </div>
 
-        <div className="mt-6 border-t border-white/5 pt-5">
+        <div className="mt-8 border-t border-white/5 pt-6">
           <SectionTitle title="Feature toggles" icon="ToggleRight" />
           <div className="space-y-2">
             <Toggle
@@ -151,34 +181,52 @@ export function ConfigForm({
             Save configuration
           </button>
         </div>
-      </div>
+      </motion.div>
 
       {/* Live preview */}
-      <div className="card flex flex-col items-center justify-center text-center">
-        <div className="eyebrow mb-4">Live preview</div>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.2, duration: 0.5 }}
+        className="card flex flex-col items-center justify-center text-center relative overflow-hidden"
+      >
+        {/* Pulsing glow behind score */}
+        <div
+          className="absolute inset-0 animate-glow-pulse"
+          style={{
+            background: `radial-gradient(circle at center, ${previewColor}10, transparent 70%)`,
+          }}
+        />
+
+        <div className="eyebrow mb-4 relative z-10">Live preview</div>
         <motion.div
           key={preview}
-          initial={{ scale: 0.9, opacity: 0.6 }}
+          initial={{ scale: 0.85, opacity: 0.5 }}
           animate={{ scale: 1, opacity: 1 }}
-          className="text-6xl font-bold tracking-tight"
-          style={{ color: scoreColor(preview) }}
+          transition={{ type: "spring", stiffness: 300, damping: 20 }}
+          className="relative z-10 text-6xl font-bold tracking-tight text-shimmer"
+          style={{ color: previewColor }}
         >
           {preview.toFixed(1)}
         </motion.div>
-        <div className="mt-2 flex items-center gap-2">
-          <span
+        <div className="mt-2 flex items-center gap-2 relative z-10">
+          <motion.span
+            key={grade.grade}
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ type: "spring", stiffness: 400, damping: 15 }}
             className="rounded-md px-2 py-0.5 text-sm font-bold"
-            style={{ background: `${scoreColor(preview)}22`, color: scoreColor(preview) }}
+            style={{ background: `${previewColor}22`, color: previewColor }}
           >
             {grade.grade}
-          </span>
+          </motion.span>
           <span className="text-sm text-slate-400">{grade.label}</span>
         </div>
-        <p className="mt-4 max-w-[220px] text-xs text-slate-500">
+        <p className="mt-4 max-w-[220px] text-xs text-slate-500 relative z-10">
           Overall ESG recalculates instantly as you drag the weights. Save to apply it across the
           organization.
         </p>
-      </div>
+      </motion.div>
     </div>
   );
 }
@@ -197,18 +245,22 @@ function Toggle({
   return (
     <button
       onClick={() => onChange(!checked)}
-      className="flex w-full items-center justify-between rounded-xl border border-white/8 bg-white/[0.02] px-4 py-3 text-left transition hover:border-white/15"
+      className="flex w-full items-center justify-between rounded-xl border border-white/[0.06] bg-white/[0.02] px-4 py-3 text-left transition-all duration-300 hover:border-white/[0.12] hover:bg-white/[0.04]"
     >
       <span>
         <span className="block text-sm font-medium text-slate-200">{label}</span>
         <span className="block text-xs text-slate-500">{hint}</span>
       </span>
       <span
-        className={`relative h-6 w-11 shrink-0 rounded-full transition ${checked ? "bg-env" : "bg-white/10"}`}
+        className="relative h-6 w-11 shrink-0 rounded-full transition-all duration-300"
+        style={{
+          background: checked ? "#34d399" : "rgba(255,255,255,0.1)",
+          boxShadow: checked ? "0 0 16px -4px rgba(52,211,153,0.5)" : "none",
+        }}
       >
         <motion.span
           layout
-          className="absolute top-0.5 h-5 w-5 rounded-full bg-white shadow"
+          className="absolute top-0.5 h-5 w-5 rounded-full bg-white shadow-lg"
           style={{ left: checked ? "22px" : "2px" }}
           transition={{ type: "spring", stiffness: 500, damping: 30 }}
         />

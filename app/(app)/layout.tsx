@@ -55,17 +55,24 @@ export default async function AppLayout({
   }));
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen relative">
+      {/* Floating ambient orbs */}
+      <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+        <div className="absolute top-[15%] right-[10%] h-[300px] w-[300px] rounded-full bg-env/[0.03] blur-[80px] animate-float" />
+        <div className="absolute bottom-[10%] left-[5%] h-[250px] w-[250px] rounded-full bg-gov/[0.04] blur-[80px] animate-float" style={{ animationDelay: "3s" }} />
+        <div className="absolute top-[60%] right-[40%] h-[200px] w-[200px] rounded-full bg-social/[0.03] blur-[80px] animate-float" style={{ animationDelay: "5s" }} />
+      </div>
+
       <Sidebar role={user.role} />
-      <div className="flex min-w-0 flex-1 flex-col">
+      <div className="flex min-w-0 flex-1 flex-col relative z-10">
         <Topbar user={user} personas={personaOptions} />
         <MobileNav role={user.role} />
         <main className="mx-auto w-full max-w-[1400px] flex-1 px-4 py-6 lg:px-8 lg:py-8">
           {children}
         </main>
         <footer className="border-t border-white/5 px-4 py-4 text-center text-[11px] text-slate-600 lg:px-8">
-          EcoSphere · Built for the Odoo Hackathon ·{" "}
-          <Link href="/copilot" className="text-slate-500 hover:text-env">
+          <span className="opacity-60">EcoSphere · Built for the Odoo Hackathon ·{" "}</span>
+          <Link href="/copilot" className="text-slate-500 transition-colors duration-300 hover:text-env">
             Ask the ESG Copilot
           </Link>
         </footer>
